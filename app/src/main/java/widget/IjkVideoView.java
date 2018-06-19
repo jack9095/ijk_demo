@@ -34,33 +34,41 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.MediaController;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-
 import tv.danmaku.ijk.media.player.AndroidMediaPlayer;
 import tv.danmaku.ijk.media.player.IMediaPlayer;
 import tv.danmaku.ijk.media.player.IjkMediaPlayer;
 import tv.danmaku.ijk.media.player.TextureMediaPlayer;
 
+/**
+ * 播放控件（布局）
+ */
 public class IjkVideoView extends FrameLayout implements MediaController.MediaPlayerControl {
-    private String TAG = "IjkVideoView";
+    private String TAG = IjkVideoView.class.getSimpleName();
     // settable by the client
     private Uri mUri;
     private Map<String, String> mHeaders;
 
-    // all possible internal states
+    // 错误状态
     public static final int STATE_ERROR = -1;
+    // 空闲状态
     public static final int STATE_IDLE = 0;
+    // 准备状态
     public static final int STATE_PREPARING = 1;
+    // 准备好状态
     public static final int STATE_PREPARED = 2;
+    // 播放状态
     public static final int STATE_PLAYING = 3;
+    // 暂停状态
     public static final int STATE_PAUSED = 4;
+    // 文件正常播放完毕，而又没有设置循环播放的话就进入该状态
     public static final int STATE_PLAYBACK_COMPLETED = 5;
 
+    // 获取当前状态
     public int getCurrentState() {
         return mCurrentState;
     }
@@ -77,10 +85,10 @@ public class IjkVideoView extends FrameLayout implements MediaController.MediaPl
     private IRenderView.ISurfaceHolder mSurfaceHolder = null;
     private IMediaPlayer mMediaPlayer = null;
     // private int         mAudioSession;
-    private int mVideoWidth;
-    private int mVideoHeight;
-    private int mSurfaceWidth;
-    private int mSurfaceHeight;
+    private int mVideoWidth;   // 视频宽度
+    private int mVideoHeight;  // 视频高度
+    private int mSurfaceWidth; // 渲染宽度
+    private int mSurfaceHeight;// 渲染高度
     private int mVideoRotationDegree;
     private IMediaController mMediaController;
     private IMediaPlayer.OnCompletionListener mOnCompletionListener;

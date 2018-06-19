@@ -70,6 +70,7 @@ public interface IMediaPlayer {
 
     void setDisplay(SurfaceHolder sh);
 
+    // 设置播放流
     void setDataSource(Context context, Uri uri)
             throws IOException, IllegalArgumentException, SecurityException, IllegalStateException;
 
@@ -83,14 +84,32 @@ public interface IMediaPlayer {
     void setDataSource(String path)
             throws IOException, IllegalArgumentException, SecurityException, IllegalStateException;
 
+    /**
+     * 获取播放的流
+     */
     String getDataSource();
 
+    /**
+     * 异步准备
+     */
     void prepareAsync() throws IllegalStateException;
 
+    /**
+     * 开始播放
+     * @throws IllegalStateException
+     */
     void start() throws IllegalStateException;
 
+    /**
+     * 停止播放
+     * @throws IllegalStateException
+     */
     void stop() throws IllegalStateException;
 
+    /**
+     * 暂停播放
+     * @throws IllegalStateException
+     */
     void pause() throws IllegalStateException;
 
     void setScreenOnWhilePlaying(boolean screenOn);
@@ -99,18 +118,43 @@ public interface IMediaPlayer {
 
     int getVideoHeight();
 
+    /**
+     * 是否播放
+     * @throws IllegalStateException
+     */
     boolean isPlaying();
 
+    /**
+     * 从那个点开始播放 （毫秒）
+     * @throws IllegalStateException
+     */
     void seekTo(long msec) throws IllegalStateException;
 
+    /**
+     * 获取当前播放的点 （毫秒）
+     * @throws IllegalStateException
+     */
     long getCurrentPosition();
 
     long getDuration();
 
+    /**
+     * 置位空闲
+     * @throws IllegalStateException
+     */
     void release();
 
+    /**
+     * 重置
+     * @throws IllegalStateException
+     */
     void reset();
 
+    /**
+     * 设置音量
+     * @param leftVolume
+     * @param rightVolume
+     */
     void setVolume(float leftVolume, float rightVolume);
 
     int getAudioSessionId();
@@ -146,18 +190,31 @@ public interface IMediaPlayer {
     /*--------------------
      * Listeners
      */
+
+    /**
+     * 准备状态回调
+     */
     interface OnPreparedListener {
         void onPrepared(IMediaPlayer mp);
     }
 
+    /**
+     * 播放完状态回调
+     */
     interface OnCompletionListener {
         void onCompletion(IMediaPlayer mp);
     }
 
+    /**
+     * 缓存更新回调
+     */
     interface OnBufferingUpdateListener {
         void onBufferingUpdate(IMediaPlayer mp, int percent);
     }
 
+    /**
+     * 设置播放点回调
+     */
     interface OnSeekCompleteListener {
         void onSeekComplete(IMediaPlayer mp);
     }
@@ -167,6 +224,9 @@ public interface IMediaPlayer {
                                 int sar_num, int sar_den);
     }
 
+    /**
+     * 错误回调
+     */
     interface OnErrorListener {
         boolean onError(IMediaPlayer mp, int what, int extra);
     }
