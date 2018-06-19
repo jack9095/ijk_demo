@@ -30,7 +30,6 @@ import static com.fly.ijktools.utils.LogUtil.TYPE.FILE;
 import static com.fly.ijktools.utils.LogUtil.TYPE.JSON;
 import static com.fly.ijktools.utils.LogUtil.TYPE.XML;
 
-
 /**
  * @author fei.wang
  * @time 2017/3/29
