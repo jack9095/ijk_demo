@@ -42,6 +42,7 @@ import tv.danmaku.ijk.media.player.IMediaPlayer;
 import tv.danmaku.ijk.media.player.IjkMediaPlayer;
 
 /**
+ * 播放器世纪控制View
  */
 public class PlayerView {
 
@@ -1445,23 +1446,36 @@ public class PlayerView {
     /**
      * 设置进度条和时长显示的方向，默认为上下显示，true为上下显示false为左右显示
      */
+//    public PlayerView setProcessDurationOrientation(int portrait) {
+//        if (portrait == PlayStateParams.PROCESS_CENTER) {
+//            query.id(R.id.app_video_currentTime_full).gone();
+//            query.id(R.id.app_video_endTime_full).gone();
+//            query.id(R.id.app_video_center).gone();
+//            query.id(R.id.app_video_lift).visible();
+//        } else if (portrait == PlayStateParams.PROCESS_LANDSCAPE) {  // 左右显示
+//            query.id(R.id.app_video_currentTime_full).visible();
+//            query.id(R.id.app_video_endTime_full).visible();
+//            query.id(R.id.app_video_center).gone();
+//            query.id(R.id.app_video_lift).gone();
+//        } else {
+//            query.id(R.id.app_video_currentTime_full).gone();
+//            query.id(R.id.app_video_endTime_full).gone();
+//            query.id(R.id.app_video_center).visible();
+//            query.id(R.id.app_video_lift).gone();
+//        }
+//        return this;
+//    }
+
+    /**
+     * 设置进度条和时长显示的方向，默认为上下显示，true为上下显示false为左右显示
+     */
     public PlayerView setProcessDurationOrientation(int portrait) {
-        if (portrait == PlayStateParams.PROCESS_CENTER) {
-            query.id(R.id.app_video_currentTime_full).gone();
-            query.id(R.id.app_video_endTime_full).gone();
-            query.id(R.id.app_video_center).gone();
-            query.id(R.id.app_video_lift).visible();
-        } else if (portrait == PlayStateParams.PROCESS_LANDSCAPE) {
+            // 左右显示
             query.id(R.id.app_video_currentTime_full).visible();
             query.id(R.id.app_video_endTime_full).visible();
             query.id(R.id.app_video_center).gone();
             query.id(R.id.app_video_lift).gone();
-        } else {
-            query.id(R.id.app_video_currentTime_full).gone();
-            query.id(R.id.app_video_endTime_full).gone();
-            query.id(R.id.app_video_center).visible();
-            query.id(R.id.app_video_lift).gone();
-        }
+
         return this;
     }
 
@@ -1707,12 +1721,12 @@ public class PlayerView {
      */
     private void hideStatusUI() {
         iv_player.setVisibility(View.GONE);
-        query.id(R.id.simple_player_settings_container).gone();
-        query.id(R.id.simple_player_select_stream_container).gone();
-        query.id(R.id.app_video_replay).gone();
-        query.id(R.id.app_video_netTie).gone();
-        query.id(R.id.app_video_freeTie).gone();
-        query.id(R.id.app_video_loading).gone();
+        query.id(R.id.simple_player_settings_container).gone();  // 声音亮度布局的控制
+        query.id(R.id.simple_player_select_stream_container).gone(); // 分辨率布局的控制
+        query.id(R.id.app_video_replay).gone();   // 重新播放布局的控制
+        query.id(R.id.app_video_netTie).gone();   // 网络提示布局的控制
+        query.id(R.id.app_video_freeTie).gone();  // 最大试看时长提示布局的控制
+        query.id(R.id.app_video_loading).gone();  // 加载中布局的控制
         if (onControlPanelVisibilityChangeListener != null) {
             onControlPanelVisibilityChangeListener.change(false);
         }
@@ -1723,8 +1737,8 @@ public class PlayerView {
      */
     private void hideAll() {
         if (!isForbidHideControlPanl) {
-            ll_topbar.setVisibility(View.GONE);
-            ll_bottombar.setVisibility(View.GONE);
+            ll_topbar.setVisibility(View.GONE);    // 顶部标题栏布局的控制
+            ll_bottombar.setVisibility(View.GONE); // 底部导航栏布局的控制
         }
         hideStatusUI();
     }

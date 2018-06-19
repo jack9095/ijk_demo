@@ -1,20 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout android:id="@+id/ll_bottom_bar"
-              xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:background="#CC000000"
-              android:gravity="center_vertical"
-              android:minHeight="48dp"
-              android:padding="4dp">
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#CC000000"
+    android:gravity="center_vertical"
+    android:minHeight="48dp"
+    android:padding="4dp">
 
-    <!--左下角播放暂停图标-->
     <ImageView
         android:id="@+id/app_video_play"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:visibility="gone"
-        android:contentDescription="@string/app_name"
         android:padding="8dp"
         android:src="@drawable/simple_player_arrow_white_24dp"/>
 
@@ -85,7 +82,6 @@
                 android:id="@+id/app_video_center"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:visibility="gone"
                 android:layout_marginLeft="2dp"
                 android:layout_marginRight="2dp"
                 android:orientation="horizontal">

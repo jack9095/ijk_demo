@@ -88,10 +88,11 @@ public class PerfectActivity extends AppCompatActivity {
             }
         }
                 .setTitle("美食")
-                .setProcessDurationOrientation(PlayStateParams.PROCESS_PORTRAIT)
+                .setProcessDurationOrientation(PlayStateParams.PROCESS_LANDSCAPE)
                 .setScaleType(PlayStateParams.fillparent)
                 .forbidTouch(false)
                 .hideSteam(true)
+//                .setForbidDoulbeUp(true)
                 .hideCenterPlayer(true)
                 .showThumbnail(new OnShowThumbnailListener() {
                     @Override
