@@ -34,11 +34,14 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.MediaController;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+
+import common.LogUtil;
 import tv.danmaku.ijk.media.player.AndroidMediaPlayer;
 import tv.danmaku.ijk.media.player.IMediaPlayer;
 import tv.danmaku.ijk.media.player.IjkMediaPlayer;
@@ -96,6 +99,7 @@ public class IjkVideoView extends FrameLayout implements MediaController.MediaPl
     private int mCurrentBufferPercentage;
     private IMediaPlayer.OnErrorListener mOnErrorListener;
     private IMediaPlayer.OnInfoListener mOnInfoListener;
+    private PlayStateListener mPlayStateListener;
     private long mSeekWhenPrepared;  // recording the seek position while preparing
     private boolean mCanPause = true;
     private boolean mCanSeekBack;
@@ -113,15 +117,15 @@ public class IjkVideoView extends FrameLayout implements MediaController.MediaPl
     private IRenderView mRenderView;
     private int mVideoSarNum;
     private int mVideoSarDen;
-    private boolean usingAndroidPlayer=false;
-    private boolean usingMediaCodec=false;
-    private boolean usingMediaCodecAutoRotate=false;
-    private boolean usingOpenSLES=false;
-    private String pixelFormat="";//Auto Select=,RGB 565=fcc-rv16,RGB 888X=fcc-rv32,YV12=fcc-yv12,默认为RGB 888X
-    private boolean enableBackgroundPlay=false;
-    private boolean enableSurfaceView=true;
-    private boolean enableTextureView=false;
-    private boolean enableNoView=false;
+    private boolean usingAndroidPlayer = false;
+    private boolean usingMediaCodec = false;
+    private boolean usingMediaCodecAutoRotate = false;
+    private boolean usingOpenSLES = false;
+    private String pixelFormat = "";//Auto Select=,RGB 565=fcc-rv16,RGB 888X=fcc-rv32,YV12=fcc-yv12,默认为RGB 888X
+    private boolean enableBackgroundPlay = false;
+    private boolean enableSurfaceView = true;
+    private boolean enableTextureView = false;
+    private boolean enableNoView = false;
 
     public IjkVideoView(Context context) {
         super(context);
@@ -229,6 +233,7 @@ public class IjkVideoView extends FrameLayout implements MediaController.MediaPl
 
     /**
      * Sets video path.
+     * //设置视频URI。（可以是网络视频地址）
      *
      * @param path the path of the video.
      */
@@ -267,6 +272,7 @@ public class IjkVideoView extends FrameLayout implements MediaController.MediaPl
     // REMOVED: addSubtitleSource
     // REMOVED: mPendingSubtitleTracks
 
+    // 停止视频播放，并释放资源。
     public void stopPlayback() {
         if (mMediaPlayer != null) {
             mMediaPlayer.stop();
@@ -344,6 +350,8 @@ public class IjkVideoView extends FrameLayout implements MediaController.MediaPl
             // REMOVED: SubtitleController
 
             // REMOVED: mAudioSession
+            //注册一个回调函数，在视频预处理完成后调用。在视频预处理完成后被调用。
+            // 此时视频的宽度、高度、宽高比信息已经获取到，此时可调用seekTo让视频从指定位置开始播放。
             mMediaPlayer.setOnPreparedListener(mPreparedListener);
             mMediaPlayer.setOnVideoSizeChangedListener(mSizeChangedListener);
             mMediaPlayer.setOnCompletionListener(mCompletionListener);
@@ -384,6 +392,10 @@ public class IjkVideoView extends FrameLayout implements MediaController.MediaPl
         }
     }
 
+    /**
+     * 设置媒体控制器。
+     * 参数controller:媒体控制器，注意是com.hx.ijkplayer_demo.widget.media.IMediaController。
+     */
     public void setMediaController(IMediaController controller) {
         if (mMediaController != null) {
             mMediaController.hide();
@@ -490,14 +502,16 @@ public class IjkVideoView extends FrameLayout implements MediaController.MediaPl
 
     private IMediaPlayer.OnInfoListener mInfoListener =
             new IMediaPlayer.OnInfoListener() {
-                public boolean onInfo(IMediaPlayer mp, int arg1, int arg2) {
+                public boolean onInfo(IMediaPlayer mp, int what, int arg2) {
+                    LogUtil.e(TAG, "播放状态: what = " + what);
+//                    mCurrentState = STATE_PREPARED;
                     if (mOnInfoListener != null) {
-                        mOnInfoListener.onInfo(mp, arg1, arg2);
+                        mOnInfoListener.onInfo(mp, what, arg2);
                     }
-                    switch (arg1) {
+                    switch (what) {
                         case IMediaPlayer.MEDIA_INFO_VIDEO_ROTATION_CHANGED:
                             mVideoRotationDegree = arg2;
-                            Log.d(TAG, "MEDIA_INFO_VIDEO_ROTATION_CHANGED: " + arg2);
+                            LogUtil.e(TAG, "MEDIA_INFO_VIDEO_ROTATION_CHANGED: " + arg2);
                             if (mRenderView != null)
                                 mRenderView.setVideoRotation(arg2);
                             break;
@@ -530,10 +544,10 @@ public class IjkVideoView extends FrameLayout implements MediaController.MediaPl
                      */
                     if (getWindowToken() != null) {
                         Resources r = mAppContext.getResources();
-                        String message="Unknown error";
+                        String message = "Unknown error";
 
                         if (framework_err == MediaPlayer.MEDIA_ERROR_NOT_VALID_FOR_PROGRESSIVE_PLAYBACK) {
-                            message="Invalid progressive playback";
+                            message = "Invalid progressive playback";
                         }
 
                         new android.app.AlertDialog.Builder(getContext())
@@ -566,6 +580,8 @@ public class IjkVideoView extends FrameLayout implements MediaController.MediaPl
     /**
      * Register a callback to be invoked when the media file
      * is loaded and ready to go.
+     * 注册一个回调函数，在视频预处理完成后调用。在视频预处理完成后被调用。
+     * 此时视频的宽度、高度、宽高比信息已经获取到，此时可调用seekTo让视频从指定位置开始播放。
      *
      * @param l The callback that will be run
      */
@@ -576,6 +592,7 @@ public class IjkVideoView extends FrameLayout implements MediaController.MediaPl
     /**
      * Register a callback to be invoked when the end of a media file
      * has been reached during playback.
+     * 播放完成回调
      *
      * @param l The callback that will be run
      */
@@ -588,6 +605,7 @@ public class IjkVideoView extends FrameLayout implements MediaController.MediaPl
      * during playback or setup.  If no listener is specified,
      * or if the listener returned false, VideoView will inform
      * the user of any errors.
+     * 播放错误回调
      *
      * @param l The callback that will be run
      */
@@ -598,11 +616,20 @@ public class IjkVideoView extends FrameLayout implements MediaController.MediaPl
     /**
      * Register a callback to be invoked when an informational event
      * occurs during playback or setup.
+     * 事件发生回调
      *
-     * @param l The callback that will be run
+     * @param onInfoListener The callback that will be run
      */
-    public void setOnInfoListener(IMediaPlayer.OnInfoListener l) {
-        mOnInfoListener = l;
+    public void setOnInfoListener(IMediaPlayer.OnInfoListener onInfoListener) {
+        mOnInfoListener = onInfoListener;
+    }
+
+    /**
+     * 播放所有状态的回调
+     * @param playStateListener
+     */
+    public void setPlayStateListener(PlayStateListener playStateListener) {
+        mPlayStateListener = playStateListener;
     }
 
     // REMOVED: mSHCallback
@@ -693,7 +720,7 @@ public class IjkVideoView extends FrameLayout implements MediaController.MediaPl
     @Override
     public boolean onTouchEvent(MotionEvent ev) {
         if (isInPlaybackState() && mMediaController != null) {
-            toggleMediaControlsVisiblity();
+            toggleMediaControlsVisiblity();  //改变媒体控制器显隐
         }
         return false;
     }
@@ -701,7 +728,7 @@ public class IjkVideoView extends FrameLayout implements MediaController.MediaPl
     @Override
     public boolean onTrackballEvent(MotionEvent ev) {
         if (isInPlaybackState() && mMediaController != null) {
-            toggleMediaControlsVisiblity();
+            toggleMediaControlsVisiblity(); //改变媒体控制器显隐
         }
         return false;
     }
@@ -759,6 +786,7 @@ public class IjkVideoView extends FrameLayout implements MediaController.MediaPl
     public void start() {
         if (isInPlaybackState()) {
             mMediaPlayer.start();
+            LogUtil.e("开始");
             mCurrentState = STATE_PLAYING;
         }
         mTargetState = STATE_PLAYING;
@@ -769,6 +797,7 @@ public class IjkVideoView extends FrameLayout implements MediaController.MediaPl
         if (isInPlaybackState()) {
             if (mMediaPlayer.isPlaying()) {
                 mMediaPlayer.pause();
+                LogUtil.e("暂停");
                 mCurrentState = STATE_PAUSED;
             }
         }
@@ -783,6 +812,11 @@ public class IjkVideoView extends FrameLayout implements MediaController.MediaPl
         openVideo();
     }
 
+    /**
+     * 获取总长度
+     *
+     * @return
+     */
     @Override
     public int getDuration() {
         if (isInPlaybackState()) {
@@ -792,6 +826,11 @@ public class IjkVideoView extends FrameLayout implements MediaController.MediaPl
         return -1;
     }
 
+    /**
+     * 获取当前播放位置
+     *
+     * @return
+     */
     @Override
     public int getCurrentPosition() {
         if (isInPlaybackState()) {
@@ -800,6 +839,11 @@ public class IjkVideoView extends FrameLayout implements MediaController.MediaPl
         return 0;
     }
 
+    /**
+     * 设置播放位置 单位毫秒
+     *
+     * @param msec
+     */
     @Override
     public void seekTo(int msec) {
         if (isInPlaybackState()) {
@@ -810,11 +854,21 @@ public class IjkVideoView extends FrameLayout implements MediaController.MediaPl
         }
     }
 
+    /**
+     * 是否正在播放
+     *
+     * @return
+     */
     @Override
     public boolean isPlaying() {
         return isInPlaybackState() && mMediaPlayer.isPlaying();
     }
 
+    /**
+     * 获取缓冲百分比
+     *
+     * @return
+     */
     @Override
     public int getBufferPercentage() {
         if (mMediaPlayer != null) {
@@ -934,14 +988,32 @@ public class IjkVideoView extends FrameLayout implements MediaController.MediaPl
 
     public void setAspectRatio(int aspectRatio) {
         for (int i = 0; i < s_allAspectRatio.length; i++) {
-            if (s_allAspectRatio[i]==aspectRatio) {
-                mCurrentAspectRatioIndex=i;
-                if (mRenderView != null){
+            if (s_allAspectRatio[i] == aspectRatio) {
+                mCurrentAspectRatioIndex = i;
+                if (mRenderView != null) {
                     mRenderView.setAspectRatio(mCurrentAspectRatio);
                 }
                 break;
             }
         }
+    }
+
+    public interface PlayStateListener {
+        void onComplete();  // 播放完成
+
+        void onError();     // 播放错误
+
+        void onLoading();   // 加载中
+
+        void onStart();     // 开始播放
+
+        void onPlaying();   // 播放中
+
+        void onStop();      // 停止播放
+
+        void onPause();      // 暂停播放
+
+        void onResume();      // 恢复播放
     }
 }
 

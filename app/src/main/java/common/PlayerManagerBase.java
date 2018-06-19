@@ -188,19 +188,19 @@ public class PlayerManagerBase {
 //        portrait=getScreenOrientation()== ActivityInfo.SCREEN_ORIENTATION_PORTRAIT;
 
         if (!playerSupport) {
-            DebugLog.e("播放器不支持此设备");
+            LogUtil.e("播放器不支持此设备");
         }
     }
 
     private void statusChange(int newStatus) {
         status = newStatus;
         if (!isLive && newStatus==STATUS_COMPLETED) {
-            DebugLog.d("statusChange STATUS_COMPLETED...");
+            LogUtil.d("statusChange STATUS_COMPLETED...");
             if (playerStateListener != null){
                 playerStateListener.onComplete();
             }
         }else if (newStatus == STATUS_ERROR) {
-            DebugLog.d("statusChange STATUS_ERROR...");
+            LogUtil.d("statusChange STATUS_ERROR...");
             if (playerStateListener != null){
                 playerStateListener.onError();
             }
@@ -209,9 +209,9 @@ public class PlayerManagerBase {
             if (playerStateListener != null){
                 playerStateListener.onLoading();
             }
-            DebugLog.d("statusChange STATUS_LOADING...");
+            LogUtil.d("statusChange STATUS_LOADING...");
         } else if (newStatus == STATUS_PLAYING) {
-            DebugLog.d("statusChange STATUS_PLAYING...");
+            LogUtil.d("statusChange STATUS_PLAYING...");
             if (playerStateListener != null){
                 playerStateListener.onPlay();
             }
@@ -342,7 +342,7 @@ public class PlayerManagerBase {
         if (i == 0) {
             s = "off";
         }
-        DebugLog.d("onVolumeSlide:"+s);
+        LogUtil.d("onVolumeSlide:"+s);
     }
     // 滑动view进度的处理
     private void onProgressSlide(float percent) {
@@ -361,7 +361,7 @@ public class PlayerManagerBase {
         int showDelta = (int) delta / 1000;
         if (showDelta != 0) {
             String text = showDelta > 0 ? ("+" + showDelta) : "" + showDelta;
-            DebugLog.d("onProgressSlide:" + text);
+            LogUtil.d("onProgressSlide:" + text);
         }
     }
 
@@ -380,7 +380,7 @@ public class PlayerManagerBase {
                 brightness = 0.01f;
             }
         }
-        DebugLog.d("brightness:"+brightness+",percent:"+ percent);
+        LogUtil.d("brightness:"+brightness+",percent:"+ percent);
         WindowManager.LayoutParams lpa = activity.getWindow().getAttributes();
         lpa.screenBrightness = brightness + percent;
         if (lpa.screenBrightness > 1.0f){

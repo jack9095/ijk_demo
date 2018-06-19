@@ -23,7 +23,6 @@ import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.Surface;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -35,6 +34,7 @@ import java.lang.ref.WeakReference;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
+import common.LogUtil;
 import tv.danmaku.ijk.media.player.IMediaPlayer;
 import tv.danmaku.ijk.media.player.ISurfaceTextureHolder;
 
@@ -102,7 +102,8 @@ public class SurfaceRenderView extends SurfaceView implements IRenderView {
 
     @Override
     public void setVideoRotation(int degree) {
-        Log.e("", "SurfaceView doesn't support rotation (" + degree + ")!\n");
+//        LogUtil.e("", "SurfaceView doesn't support rotation (" + degree + ")!\n");
+        LogUtil.e("", "SurfaceView 不支持旋转 (" + degree + ")!\n");
     }
 
     @Override

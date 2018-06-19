@@ -16,8 +16,50 @@ public class PlayerManager extends CommonPlayerManager{
             IjkMediaPlayer.loadLibrariesOnce(null);
             IjkMediaPlayer.native_profileBegin("libijkplayer.so");
         } catch (Throwable e) {
-            DebugLog.e("GiraffePlayer" + e);
+            LogUtil.e("GiraffePlayer" + e);
         }
+
+        videoView.setPlayStateListener(new IjkVideoView.PlayStateListener() {
+            @Override
+            public void onComplete() {
+
+            }
+
+            @Override
+            public void onError() {
+
+            }
+
+            @Override
+            public void onLoading() {
+
+            }
+
+            @Override
+            public void onStart() {
+
+            }
+
+            @Override
+            public void onPlaying() {
+
+            }
+
+            @Override
+            public void onStop() {
+
+            }
+
+            @Override
+            public void onPause() {
+
+            }
+
+            @Override
+            public void onResume() {
+
+            }
+        });
 
         videoView.setOnCompletionListener(new IMediaPlayer.OnCompletionListener() {
             @Override
@@ -37,18 +79,19 @@ public class PlayerManager extends CommonPlayerManager{
         videoView.setOnInfoListener(new IMediaPlayer.OnInfoListener() {
             @Override
             public boolean onInfo(IMediaPlayer mp, int what, int extra) {
+                LogUtil.e("what = " + what + "   extra = " + extra);
                 switch (what) {
-                    case IMediaPlayer.MEDIA_INFO_BUFFERING_START:
+                    case IMediaPlayer.MEDIA_INFO_BUFFERING_START:  // 开始缓存
                         statusChange(STATUS_LOADING);
                         break;
-                    case IMediaPlayer.MEDIA_INFO_BUFFERING_END:
+                    case IMediaPlayer.MEDIA_INFO_BUFFERING_END:   // 结束缓存
                         statusChange(STATUS_PLAYING);
                         break;
                     case IMediaPlayer.MEDIA_INFO_NETWORK_BANDWIDTH:
                         //显示下载速度
 //                      Toast.show("download rate:" + extra);
                         break;
-                    case IMediaPlayer.MEDIA_INFO_VIDEO_RENDERING_START:
+                    case IMediaPlayer.MEDIA_INFO_VIDEO_RENDERING_START:  // 播放
                         statusChange(STATUS_PLAYING);
                         break;
                 }
@@ -60,27 +103,37 @@ public class PlayerManager extends CommonPlayerManager{
 
     private void statusChange(int newStatus) {
         status = newStatus;
-        if (!isLive && newStatus==STATUS_COMPLETED) {
-            DebugLog.e("statusChange STATUS_COMPLETED...");
-            if (playerStateListener != null){
-                playerStateListener.onComplete();
-            }
-        }else if (newStatus == STATUS_ERROR) {
-            DebugLog.e("statusChange STATUS_ERROR...");
-            if (playerStateListener != null){
-                playerStateListener.onError();
-            }
-        } else if(newStatus==STATUS_LOADING){
-//            $.id(R.id.app_video_loading).visible();
-            if (playerStateListener != null){
-                playerStateListener.onLoading();
-            }
-            DebugLog.e("statusChange STATUS_LOADING...");
-        } else if (newStatus == STATUS_PLAYING) {
-            DebugLog.e("statusChange STATUS_PLAYING...");
-            if (playerStateListener != null){
-                playerStateListener.onPlay();
-            }
+        switch (newStatus){
+            case STATUS_COMPLETED:
+                if (!isLive) {
+                    LogUtil.e("statusChange STATUS_COMPLETED... 播放完成");
+                    if (playerStateListener != null){
+                        playerStateListener.onComplete();
+                    }
+                }
+                break;
+            case STATUS_ERROR:
+                LogUtil.e("statusChange STATUS_ERROR... 错误");
+                if (playerStateListener != null){
+                    playerStateListener.onError();
+                }
+                break;
+            case STATUS_LOADING:
+                //            $.id(R.id.app_video_loading).visible();
+                if (playerStateListener != null){
+                    playerStateListener.onLoading();
+                }
+                LogUtil.e("statusChange STATUS_LOADING... 加载");
+                break;
+            case STATUS_PLAYING:
+                LogUtil.e("statusChange STATUS_PLAYING... 播放");
+                if (playerStateListener != null){
+                    playerStateListener.onPlay();
+                }
+                break;
+            case STATUS_PAUSE:
+                LogUtil.e("statusChange STATUS_PAUSE... 暂停");
+                break;
         }
     }
 
@@ -112,7 +165,7 @@ public class PlayerManager extends CommonPlayerManager{
     public void play(String url) {
         this.url = url;
         if (playerSupport) {
-            videoView.setVideoPath(url);
+            videoView.setVideoPath(url); // 设置视频路径
             videoView.start();
         }
     }
@@ -153,7 +206,7 @@ public class PlayerManager extends CommonPlayerManager{
         return this;
     }
 
-    // 触觉谱系
+    // //改变视频缩放状态
     public void toggleAspectRatio(){
         if (videoView != null) {
             videoView.toggleAspectRatio();

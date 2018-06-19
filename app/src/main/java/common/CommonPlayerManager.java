@@ -98,7 +98,7 @@ public class CommonPlayerManager {
 //        portrait=getScreenOrientation()== ActivityInfo.SCREEN_ORIENTATION_PORTRAIT;
 
         if (!playerSupport) {
-            DebugLog.e("播放器不支持此设备");
+            LogUtil.e("播放器不支持此设备");
         }
     }
 
@@ -188,7 +188,7 @@ public class CommonPlayerManager {
         if (i == 0) {
             s = "off";
         }
-        DebugLog.d("onVolumeSlide:" + s);
+        LogUtil.d("onVolumeSlide:" + s);
     }
 
     // 滑动view进度的处理
@@ -208,7 +208,7 @@ public class CommonPlayerManager {
         int showDelta = (int) delta / 1000;
         if (showDelta != 0) {
             String text = showDelta > 0 ? ("+" + showDelta) : "" + showDelta;
-            DebugLog.d("onProgressSlide:" + text);
+            LogUtil.d("onProgressSlide:" + text);
         }
     }
 
