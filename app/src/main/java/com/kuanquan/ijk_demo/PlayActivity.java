@@ -47,10 +47,10 @@ public class PlayActivity extends AppCompatActivity implements PlayerManager.Pla
         });
         mIjkVideoView = findViewById(R.id.video_view);
         video_view_layout = findViewById(R.id.video_view_layout);
-        RelativeLayout.LayoutParams params= (RelativeLayout.LayoutParams) video_view_layout.getLayoutParams();
-        params.height = ScreenUtils.getScreenHeight(this) / 3;
-        params.width = ViewGroup.LayoutParams.MATCH_PARENT;//设置当前控件布局的高度
-        video_view_layout.setLayoutParams(params);//将设置好的布局参数应用到控件中
+//        RelativeLayout.LayoutParams params= (RelativeLayout.LayoutParams) video_view_layout.getLayoutParams();
+//        params.height = ScreenUtils.getScreenHeight(this) / 3;
+//        params.width = ViewGroup.LayoutParams.MATCH_PARENT;//设置当前控件布局的高度
+//        video_view_layout.setLayoutParams(params);//将设置好的布局参数应用到控件中
         initPlayer();
     }
 
