@@ -6,9 +6,12 @@
       <module fileurl="file://$PROJECT_DIR$/ijk_demo.iml" filepath="$PROJECT_DIR$/ijk_demo.iml" />
       <module fileurl="file://$PROJECT_DIR$/ijkplayer-java/ijkplayer-java.iml" filepath="$PROJECT_DIR$/ijkplayer-java/ijkplayer-java.iml" />
       <module fileurl="file://$PROJECT_DIR$/ijkplayer_tools/ijkplayer_tools.iml" filepath="$PROJECT_DIR$/ijkplayer_tools/ijkplayer_tools.iml" />
+      <module fileurl="file://D:\ijk_demo\ijkplayer_tools\ijkplayer_tools.iml" filepath="D:\ijk_demo\ijkplayer_tools\ijkplayer_tools.iml" />
       <module fileurl="file://D:\ijk_demo\ijkplayer_tools\jjdxm-ijkplayer.iml" filepath="D:\ijk_demo\ijkplayer_tools\jjdxm-ijkplayer.iml" />
       <module fileurl="file://$PROJECT_DIR$/playertool/playertool.iml" filepath="$PROJECT_DIR$/playertool/playertool.iml" />
+      <module fileurl="file://D:\ijk_demo\playertool\playertool.iml" filepath="D:\ijk_demo\playertool\playertool.iml" />
       <module fileurl="file://$PROJECT_DIR$/test/test.iml" filepath="$PROJECT_DIR$/test/test.iml" />
+      <module fileurl="file://D:\ijk_demo\test\test.iml" filepath="D:\ijk_demo\test\test.iml" />
     </modules>
   </component>
 </project>

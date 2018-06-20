@@ -7,7 +7,7 @@
     android:orientation="vertical">
 
     <!--播放器-->
-    <com.fly.playertool.widget.IjkVideoView
+    <com.fly.playertool.widget.IjkVideoViewA
         android:id="@+id/player_view_player_video_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />

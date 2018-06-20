@@ -45,6 +45,7 @@ public class MainActivity extends AppCompatActivity implements BasePlayerView.Pl
         rootView = getLayoutInflater().from(this).inflate(R.layout.activity_main, null);
         setContentView(rootView);
         player = findViewById(R.id.video_view);
+        player.setStartIjkMediaPlayer();
         player.setPlayerListener(this);
         RelativeLayout.LayoutParams params= (RelativeLayout.LayoutParams) player.getLayoutParams();
         params.height = ScreenUtils.getScreenHeight(this) / 3;
