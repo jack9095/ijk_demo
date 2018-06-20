@@ -13,6 +13,7 @@ public class PlayerManager extends CommonPlayerManager{
     private int currentPosition;  // 当前播放点
     private int status = STATUS_IDLE; // 状态
 
+
     // 初始化
     public PlayerManager(IjkVideoView mIjkVideoView,Context context) {
         super(context,mIjkVideoView);
