@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/player_bottom_bar"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#CC000000"
+    android:gravity="center_vertical"
+    android:minHeight="45dp"
+    android:padding="4dp"
+    android:orientation="horizontal">
+
+    <!--左下角的播放暂停按钮-->
+    <ImageView
+        android:id="@+id/player_bottom_bar_video_play"
+        android:layout_weight="0.25"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/app_name"
+        android:padding="8dp"
+        android:src="@drawable/player_left_bottom_play" />
+
+    <TextView
+        android:id="@+id/player_bottom_bar_currentTime"
+        android:layout_weight="0.2"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:gravity="center"
+        android:text="06:21"
+        android:textColor="@android:color/white"
+        android:textSize="12sp"
+        android:visibility="visible" />
+
+    <SeekBar
+        android:id="@+id/player_bottom_bar_seekBar"
+        style="@style/SeekBarAppTheme"
+        android:layout_weight="1.2"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/player_bottom_bar_endTime"
+        android:layout_weight="0.2"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:gravity="center"
+        android:text="10:10"
+        android:textColor="@android:color/white"
+        android:textSize="12sp"
+        android:visibility="visible" />
+
+    <TextView
+        android:id="@+id/player_bottom_bar_stream"
+        android:layout_weight="0.15"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:clickable="true"
+        android:focusable="true"
+        android:visibility="gone"
+        android:padding="8dp"
+        android:text="标清"
+        android:textColor="@android:color/white"
+        android:textSize="12sp" />
+
+    <ImageView
+        android:id="@+id/player_bottom_bar_zoom"
+        android:layout_weight="0.2"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/app_name"
+        android:padding="8dp"
+        android:src="@drawable/player_fullscreen_zoom" />
+
+</LinearLayout>

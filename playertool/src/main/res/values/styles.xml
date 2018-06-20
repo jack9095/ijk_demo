@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!--播放进度条的样式-->
+    <style name="SeekBarAppTheme">
+        <item name="android:indeterminateOnly">false</item>
+        <item name="android:focusable">true</item>
+        <item name="android:progressDrawable">@drawable/player_progress_horizontal</item>
+        <item name="android:indeterminateDrawable">@drawable/player_progress_horizontal</item>
+        <item name="android:thumb">@drawable/player_control_selector</item>
+        <item name="android:minHeight">5dp</item>
+        <item name="android:maxHeight">5dp</item>
+    </style>
+</resources>
