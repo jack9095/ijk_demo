@@ -52,17 +52,17 @@ public class PlayActivity extends AppCompatActivity implements PlayerManager.Pla
 
     @Override
     public void onComplete() {
-
+        mPlayerView.pausePlayerUI();
     }
 
     @Override
     public void onError() {
-
+        mPlayerView.pausePlayerUI();
     }
 
     @Override
     public void onLoading() {
-
+        mPlayerView.pausePlayerUI();
     }
 
     @Override

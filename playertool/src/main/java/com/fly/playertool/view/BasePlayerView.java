@@ -80,6 +80,7 @@ public class BasePlayerView extends FrameLayout {
         mPlayerLineView = rootView.findViewById(R.id.player_view_player_play_line_view);
         centerPlay = rootView.findViewById(R.id.player_view_player_center_icon);
 
+        mPlayerBottomView.setIjkVideoView(mIjkVideoView);
 //        replayImage.setOnClickListener(this);
 //        netTieText.setOnClickListener(this);
 //        freeTieText.setOnClickListener(this);

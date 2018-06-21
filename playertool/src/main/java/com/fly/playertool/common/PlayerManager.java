@@ -67,12 +67,10 @@ public class PlayerManager extends CommonPlayerManager{
         status = newStatus;
         switch (newStatus){
             case STATUS_COMPLETED:
-//                if (!isLive) {
-//                    LogUtil.e("statusChange STATUS_COMPLETED... 播放完成");
-//                    if (playerStateListener != null){
-//                        playerStateListener.onComplete();
-//                    }
-//                }
+                LogUtil.e("statusChange STATUS_COMPLETED... 播放完成");
+                if (playerStateListener != null){
+                    playerStateListener.onComplete();
+                }
                 break;
             case STATUS_ERROR:
                 LogUtil.e("PlayerManager错误");

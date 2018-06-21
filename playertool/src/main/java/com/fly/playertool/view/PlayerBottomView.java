@@ -2,6 +2,7 @@ package com.fly.playertool.view;
 
 import android.content.Context;
 import android.os.Build;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
@@ -15,6 +16,8 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 import com.fly.playertool.R;
 import com.fly.playertool.utils.CommonUtil;
+import com.fly.playertool.utils.HandlerWhat;
+import com.fly.playertool.widget.IjkVideoView;
 
 /**
  * Created by fei.wang on 2018/6/20.
@@ -22,6 +25,9 @@ import com.fly.playertool.utils.CommonUtil;
  */
 public class PlayerBottomView extends FrameLayout {
 
+    private Handler mHandler;
+
+    private IjkVideoView mIjkVideoView; // 播放器的封装 (原生的Ijkplayer)
     private ImageView leftBottomPlayer;
     private TextView currentTime;
     private SeekBar seekBar;
@@ -89,6 +95,7 @@ public class PlayerBottomView extends FrameLayout {
         }
     }
 
+    // 设置视频总时长
     public void setTotalTime(long totalTime){
         this.totalTimeF = totalTime;
         String time = CommonUtil.generateTime(totalTime);
@@ -99,6 +106,7 @@ public class PlayerBottomView extends FrameLayout {
         }
     }
 
+    // 设置当前播放时长
     public void setCurrentTime(long currenttime){
         this.currentTimeF = currenttime;
         String time = CommonUtil.generateTime(currenttime);
@@ -109,12 +117,23 @@ public class PlayerBottomView extends FrameLayout {
         }
     }
 
+    // 设置分辨率名称 （标清、高清）
     public void setStream(String streams){
         if (!TextUtils.isEmpty(streams)) {
             stream.setText(streams);
         }else {
             stream.setText("");
         }
+    }
+
+    // 获取播放器控件
+    public void setIjkVideoView(IjkVideoView ijkVideoView){
+        mIjkVideoView = ijkVideoView;
+    }
+
+    // 获取handler对象
+    public void setHandler(Handler handler){
+        mHandler = handler;
     }
 
     /**
@@ -138,17 +157,16 @@ public class PlayerBottomView extends FrameLayout {
         @Override
         public void onStartTrackingTouch(SeekBar seekBar) {
             isDragging = true;
+            mHandler.removeMessages(HandlerWhat.MESSAGE_SHOW_PROGRESS);
         }
 
         /**停止拖动*/
         @Override
         public void onStopTrackingTouch(SeekBar seekBar) {
-//            videoView.seekTo((int) ((totalTimeF * seekBar.getProgress() * 1.0) / 1000)); // 给播放器设置
+            mIjkVideoView.seekTo((int) ((totalTimeF * seekBar.getProgress() * 1.0) / 1000)); // 给播放器设置
+            mHandler.removeMessages(HandlerWhat.MESSAGE_SHOW_PROGRESS);
             isDragging = false;
-            syncProgress(totalTimeF,currentTimeF,0);
-//            if (!isDragging) {
-//                updatePausePlay();
-//            }
+            mHandler.sendEmptyMessageDelayed(HandlerWhat.MESSAGE_SHOW_PROGRESS, 1000);
         }
     };
 
@@ -158,25 +176,25 @@ public class PlayerBottomView extends FrameLayout {
      * @param currentTime 当前播放的时长
      * @param bufferTime 缓存的时长
      */
-    public void syncProgress(long totalTime,long currentTime,int bufferTime) {
-        if (isDragging) {
-            return;
-        }
-
-        if (seekBar != null) {
-            if (totalTime > 0) {
-                long pos = 1000L * currentTime / totalTime;
-                seekBar.setProgress((int) pos);
-            }
-//            seekBar.setSecondaryProgress(bufferTime * 10);
-        }
-
-//        if (isCharge && maxPlaytime + 1000 < getCurrentPosition()) { // 最大试看时长
-//            query.id(R.id.app_video_freeTie).visible();  // 最大试看时长提示语
-//            pausePlay(); // 暂停
-//        } else {
-            setCurrentTime(currentTime);
-            setTotalTime(totalTime);
+//    public void syncProgress(long totalTime,long currentTime,int bufferTime) {
+//        if (isDragging) {
+//            return;
 //        }
-    }
+//
+//        if (seekBar != null) {
+//            if (totalTime > 0) {
+//                long pos = 1000L * currentTime / totalTime;
+//                seekBar.setProgress((int) pos);
+//            }
+////            seekBar.setSecondaryProgress(bufferTime * 10);
+//        }
+//
+////        if (isCharge && maxPlaytime + 1000 < getCurrentPosition()) { // 最大试看时长
+////            query.id(R.id.app_video_freeTie).visible();  // 最大试看时长提示语
+////            pausePlay(); // 暂停
+////        } else {
+//            setCurrentTime(currentTime);
+//            setTotalTime(totalTime);
+////        }
+//    }
 }

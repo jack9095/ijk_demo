@@ -12,6 +12,7 @@ import android.util.AttributeSet;
 import android.view.View;
 import com.fly.playertool.R;
 import com.fly.playertool.utils.CommonUtil;
+import com.fly.playertool.utils.HandlerWhat;
 import com.fly.playertool.utils.LogUtil;
 import com.fly.playertool.utils.NetworkUtils;
 import com.fly.playertool.utils.ScreenRotateUtil;
@@ -24,19 +25,6 @@ import tv.danmaku.ijk.media.player.IjkMediaPlayer;
  * 播放控件
  */
 public class PlayerView extends BasePlayerView implements View.OnClickListener{
-
-    /**
-     * 同步进度
-     */
-    private static final int MESSAGE_SHOW_PROGRESS = 1;
-    /**
-     * 设置新位置
-     */
-    private static final int MESSAGE_SEEK_NEW_POSITION = 3;
-    /**
-     * 重新播放
-     */
-    private static final int MESSAGE_RESTART_PLAY = 5;
 
     public PlayerView(@NonNull Context context) {
         super(context);
@@ -65,22 +53,22 @@ public class PlayerView extends BasePlayerView implements View.OnClickListener{
             switch (msg.what) {
 
                 /**滑动完成，设置播放进度*/
-                case MESSAGE_SEEK_NEW_POSITION:
+                case HandlerWhat.MESSAGE_SEEK_NEW_POSITION:
 //                    if (!isLive && newPosition >= 0) {
 //                        videoView.seekTo((int) newPosition);
 //                        newPosition = -1;
 //                    }
                     break;
                 /**滑动中，同步播放进度*/
-                case MESSAGE_SHOW_PROGRESS:
+                case HandlerWhat.MESSAGE_SHOW_PROGRESS:
                     long pos = syncProgress();
                     if (mIjkVideoView.isPlaying()) {
-                        msg = obtainMessage(MESSAGE_SHOW_PROGRESS);
+                        msg = obtainMessage(HandlerWhat.MESSAGE_SHOW_PROGRESS);
                         sendMessageDelayed(msg, 1000 - (pos % 1000));
                     }
                     break;
                 /**重新去播放*/
-                case MESSAGE_RESTART_PLAY:
+                case HandlerWhat.MESSAGE_RESTART_PLAY:
 //                    status = PlayStateParams.STATE_ERROR;
 //                    startPlay();
 //                    updatePausePlay();
@@ -105,7 +93,7 @@ public class PlayerView extends BasePlayerView implements View.OnClickListener{
 
     // 开始播放
     public void playing(){
-        mHandler.sendEmptyMessage(MESSAGE_SHOW_PROGRESS);
+        mHandler.sendEmptyMessage(HandlerWhat.MESSAGE_SHOW_PROGRESS);
     }
 
     /**
@@ -119,6 +107,7 @@ public class PlayerView extends BasePlayerView implements View.OnClickListener{
         mPlayerBottomView.getImageView().setOnClickListener(this);
         mPlayerBottomView.getZoomView().setOnClickListener(this);
         mPlayerBottomView.getLineView().setOnClickListener(this);
+        mPlayerBottomView.setHandler(mHandler);
 //        mIjkVideoView.setOnInfoListener(new IMediaPlayer.OnInfoListener() {
 //            @Override
 //            public boolean onInfo(IMediaPlayer mp, int what, int extra) {
