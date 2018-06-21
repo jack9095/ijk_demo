@@ -5,7 +5,10 @@ import android.content.Context;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.provider.Settings;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
 import android.view.OrientationEventListener;
+import android.view.View;
 
 /**
  * Created by Administrator on 2018/6/21.
@@ -103,6 +106,8 @@ public class ScreenRotateUtil extends OrientationEventListener {
                     }
                     isBack = false;
                     ((Activity) mContext).setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+                    // 显示状态栏
+                    ((Activity) mContext).getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_VISIBLE);
                 }
             }
         } else if (orientation > 225 && orientation < 315) { // 设置横屏
@@ -114,6 +119,8 @@ public class ScreenRotateUtil extends OrientationEventListener {
                         mScreenRotateListener.onLandscape();
                     }
                     ((Activity) mContext).setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+                    // 隐藏状态栏
+                    ((Activity) mContext).getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_FULLSCREEN);
                 }
             }
 
@@ -126,6 +133,8 @@ public class ScreenRotateUtil extends OrientationEventListener {
                         mScreenRotateListener.onReverseLandscape();
                     }
                     ((Activity) mContext).setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_REVERSE_LANDSCAPE);
+                    // 隐藏状态栏
+                    ((Activity) mContext).getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_FULLSCREEN);
                 }
             }
         }

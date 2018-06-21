@@ -1,6 +1,7 @@
 package com.kuanquan.ijk_demo;
 
 import android.content.pm.ActivityInfo;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -128,6 +129,6 @@ public class PlayActivity extends AppCompatActivity implements PlayerManager.Pla
         } else {
             mScreenRotateUtil.manualSwitchingPortrait();
         }
-
     }
+
 }
