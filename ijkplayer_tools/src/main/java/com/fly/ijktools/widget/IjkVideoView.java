@@ -37,6 +37,7 @@ import android.widget.FrameLayout;
 import android.widget.MediaController;
 
 import com.fly.ijktools.utils.LogUtil;
+import com.fly.ijktools.utils.ScreenUtils;
 
 import java.io.File;
 import java.io.IOException;
@@ -243,7 +244,7 @@ public class IjkVideoView extends FrameLayout implements MediaController.MediaPl
         /**修复一个bug，宽度不填满问题，感谢热心兄弟的慧眼*/
         LayoutParams lp = new LayoutParams(
                 LayoutParams.MATCH_PARENT,
-                LayoutParams.WRAP_CONTENT,
+                LayoutParams.MATCH_PARENT,
                 Gravity.CENTER);
         renderUIView.setLayoutParams(lp);
         addView(renderUIView);

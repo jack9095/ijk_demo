@@ -51,60 +51,60 @@ public class MainActivity extends AppCompatActivity implements BasePlayerView.Pl
         params.height = ScreenUtils.getScreenHeight(this) / 3;
         params.width = ViewGroup.LayoutParams.MATCH_PARENT;//设置当前控件布局的高度
         player.setLayoutParams(params);//将设置好的布局参数应用到控件中
-        initPlayer();
+//        initPlayer();
         LogUtil.e("onCreate++++++++++++onCreate");
     }
 
-    private void initPlayer() {
-        // 虚拟按键的隐藏方法
-        rootView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-
-            @Override
-            public void onGlobalLayout() {
-                //比较Activity根布局与当前布局的大小
-                int heightDiff = rootView.getRootView().getHeight() - rootView.getHeight();
-                if (heightDiff > 100) {
-                    //大小超过100时，一般为显示虚拟键盘事件
-                    rootView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_VISIBLE);
-                } else {
-                    //大小小于100时，为不显示虚拟键盘或虚拟键盘隐藏
-                    rootView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
-                }
-            }
-        });
-
-        // 常亮
-        PowerManager pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
-        wakeLock = pm.newWakeLock(PowerManager.SCREEN_BRIGHT_WAKE_LOCK, "liveTAG");
-        wakeLock.acquire();
-        list = new ArrayList<>();
-        //有部分视频加载有问题，这个视频是有声音显示不出图像的，没有解决http://fzkt-biz.oss-cn-hangzhou.aliyuncs.com/vedio/2f58be65f43946c588ce43ea08491515.mp4
-        //这里模拟一个本地视频的播放，视频需要将testvideo文件夹的视频放到安卓设备的内置sd卡根目录中
-        String url1 = CommonUtil.getLocalVideoPath("my_video.mp4");
-        if (!new File(url1).exists()) {
-            url1 = "http://ips.ifeng.com/video19.ifeng.com/video09/2014/06/16/1989823-102-086-0009.mp4";
-        }
-        VideoijkBean m1 = new VideoijkBean();
-        m1.setStream("标清");
-        m1.setUrl(url1);
-        VideoijkBean m2 = new VideoijkBean();
-        m2.setStream("高清");
-        m2.setUrl(url4);
-        list.add(m1);
-        list.add(m2);
-        player = new PlayerView(this);
-        player.setTitle("美食");
-        player.setScaleType(PlayStateParams.fillparent);
-        player.setPlaySource(list);
-        player.setChargeTie(true,60000);
-        player.startPlay();
-
-        Glide.with(mContext)
-                .load("https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=3909870665,3259015587&fm=27&gp=0.jpg")
-                .placeholder(R.color.cl_default)
-                .error(R.color.cl_error)
-                .into(player.cover);
-    }
+//    private void initPlayer() {
+//        // 虚拟按键的隐藏方法
+//        rootView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+//
+//            @Override
+//            public void onGlobalLayout() {
+//                //比较Activity根布局与当前布局的大小
+//                int heightDiff = rootView.getRootView().getHeight() - rootView.getHeight();
+//                if (heightDiff > 100) {
+//                    //大小超过100时，一般为显示虚拟键盘事件
+//                    rootView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_VISIBLE);
+//                } else {
+//                    //大小小于100时，为不显示虚拟键盘或虚拟键盘隐藏
+//                    rootView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
+//                }
+//            }
+//        });
+//
+//        // 常亮
+//        PowerManager pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
+//        wakeLock = pm.newWakeLock(PowerManager.SCREEN_BRIGHT_WAKE_LOCK, "liveTAG");
+//        wakeLock.acquire();
+//        list = new ArrayList<>();
+//        //有部分视频加载有问题，这个视频是有声音显示不出图像的，没有解决http://fzkt-biz.oss-cn-hangzhou.aliyuncs.com/vedio/2f58be65f43946c588ce43ea08491515.mp4
+//        //这里模拟一个本地视频的播放，视频需要将testvideo文件夹的视频放到安卓设备的内置sd卡根目录中
+//        String url1 = CommonUtil.getLocalVideoPath("my_video.mp4");
+//        if (!new File(url1).exists()) {
+//            url1 = "http://ips.ifeng.com/video19.ifeng.com/video09/2014/06/16/1989823-102-086-0009.mp4";
+//        }
+//        VideoijkBean m1 = new VideoijkBean();
+//        m1.setStream("标清");
+//        m1.setUrl(url1);
+//        VideoijkBean m2 = new VideoijkBean();
+//        m2.setStream("高清");
+//        m2.setUrl(url4);
+//        list.add(m1);
+//        list.add(m2);
+//        player = new PlayerView(this);
+//        player.setTitle("美食");
+//        player.setScaleType(PlayStateParams.fillparent);
+//        player.setPlaySource(list);
+//        player.setChargeTie(true,60000);
+//        player.startPlay();
+//
+//        Glide.with(mContext)
+//                .load("https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=3909870665,3259015587&fm=27&gp=0.jpg")
+//                .placeholder(R.color.cl_default)
+//                .error(R.color.cl_error)
+//                .into(player.cover);
+//    }
 
     @Override
     protected void onPause() {
@@ -140,7 +140,7 @@ public class MainActivity extends AppCompatActivity implements BasePlayerView.Pl
 
     @Override
     public void onBackPressed() {
-        if (player != null && player.onBackPressed()) {
+        if (player != null) {
             return;
         }
         super.onBackPressed();
@@ -165,48 +165,13 @@ public class MainActivity extends AppCompatActivity implements BasePlayerView.Pl
     }
 
     @Override
-    public void onComplete() {
-
-    }
-
-    @Override
-    public void onError() {
-
-    }
-
-    @Override
-    public void onLoading() {
-
-    }
-
-    @Override
-    public void start() {
-
-    }
-
-    @Override
-    public void onPlaying() {
-
-    }
-
-    @Override
-    public void stop() {
-
-    }
-
-    @Override
-    public void pause() {
-
-    }
-
-    @Override
-    public void resume() {
-
-    }
-
-    @Override
     public void goBack() {
 //        finish();
         startActivity(new Intent(this,PlayActivity.class));
+    }
+
+    @Override
+    public void screen(int type) {
+
     }
 }

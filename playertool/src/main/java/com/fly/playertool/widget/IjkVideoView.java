@@ -192,7 +192,6 @@ public class IjkVideoView extends FrameLayout implements MediaController.MediaPl
             renderView.setVideoSampleAspectRatio(mVideoSarNum, mVideoSarDen);
 
         View renderUIView = mRenderView.getView();
-        /**修复一个bug，宽度不填满问题，感谢热心兄弟的慧眼*/
         LayoutParams lp = new LayoutParams(
                 LayoutParams.MATCH_PARENT,
                 LayoutParams.WRAP_CONTENT,
@@ -221,11 +220,14 @@ public class IjkVideoView extends FrameLayout implements MediaController.MediaPl
                     renderView.setAspectRatio(mCurrentAspectRatio);
                 }
                 setRenderView(renderView);
+                LogUtil.e(TAG, "TextureRenderView");
                 break;
             }
             case RENDER_SURFACE_VIEW: {
                 SurfaceRenderView renderView = new SurfaceRenderView(getContext());
                 setRenderView(renderView);
+
+                LogUtil.e(TAG, "SurfaceRenderView");
                 break;
             }
             default:

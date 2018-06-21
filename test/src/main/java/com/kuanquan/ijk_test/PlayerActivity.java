@@ -29,7 +29,7 @@ public class PlayerActivity extends Activity {
         this.mContext = this;
         rootView = getLayoutInflater().from(this).inflate(R.layout.simple_player_view_player, null);
         setContentView(rootView);
-        String url = "http://183.6.245.249/v.cctv.com/flash/mp4video6/TMS/2011/01/05/cf752b1c12ce452b3040cab2f90bc265_h264818000nero_aac32-1.mp4";
+        String url = "http://ips.ifeng.com/video19.ifeng.com/video09/2014/06/16/1989823-102-086-0009.mp4";
         player = new PlayerView(this, rootView)
                 .setTitle("美食")
                 .setScaleType(PlayStateParams.fitparent)

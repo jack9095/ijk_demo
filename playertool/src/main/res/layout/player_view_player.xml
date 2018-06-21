@@ -7,7 +7,7 @@
     android:orientation="vertical">
 
     <!--播放器-->
-    <com.fly.playertool.widget.IjkVideoViewA
+    <com.fly.playertool.widget.IjkVideoView
         android:id="@+id/player_view_player_video_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
@@ -143,6 +143,7 @@
         layout="@layout/player_touch_gestures"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:visibility="gone"
         android:layout_centerInParent="true" />
 
     <!-- 顶部栏-->
@@ -161,6 +162,7 @@
     <!--分辨率 （高清、标清） 选择  从右边滑出-->
     <com.fly.playertool.view.PlayerLineView
         android:id="@+id/player_view_player_play_line_view"
+        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 

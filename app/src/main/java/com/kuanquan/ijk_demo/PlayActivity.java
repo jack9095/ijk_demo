@@ -1,66 +1,53 @@
 package com.kuanquan.ijk_demo;
 
+import android.content.pm.ActivityInfo;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewTreeObserver;
 import android.widget.RelativeLayout;
 
 import com.fly.playertool.common.PlayerManager;
-import com.fly.playertool.utils.ScreenUtils;
+import com.fly.playertool.utils.CommonUtil;
+import com.fly.playertool.utils.DisplayUtil;
+import com.fly.playertool.utils.ScreenRotateUtil;
+import com.fly.playertool.utils.UrlUtil;
+import com.fly.playertool.view.BasePlayerView;
+import com.fly.playertool.view.PlayerView;
 import com.fly.playertool.widget.IjkVideoView;
 
-public class PlayActivity extends AppCompatActivity implements PlayerManager.PlayerStateListener{
-    private String url1 = "rtmp://203.207.99.19:1935/live/CCTV5";
-    private String url3 = "rtsp://184.72.239.149/vod/mp4:BigBuckBunny_115k.mov";
-    private String url4 = "http://ips.ifeng.com/video19.ifeng.com/video09/2014/06/16/1989823-102-086-0009.mp4";
-    private String url5 = "http://mp4.vjshi.com/2013-05-28/2013052815051372.mp4";
-    private String url6 = "http://live.hkstv.hk.lxdns.com/live/hks/playlist.m3u8";
+public class PlayActivity extends AppCompatActivity implements PlayerManager.PlayerStateListener, ScreenRotateUtil.ScreenRotateListener, BasePlayerView.PlayerListener {
+
     private PlayerManager player;
-    private IjkVideoView mIjkVideoView;
+    private PlayerView mPlayerView;
     private RelativeLayout video_view_layout;
-    View rootView;
+    private View rootView;
+    private ScreenRotateUtil mScreenRotateUtil;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         super.onCreate(savedInstanceState);
         rootView = getLayoutInflater().from(this).inflate(R.layout.activity_play, null);
         setContentView(rootView);
-        /**虚拟按键的隐藏方法*/
-        rootView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-
-            @Override
-            public void onGlobalLayout() {
-
-                //比较Activity根布局与当前布局的大小
-                int heightDiff = rootView.getRootView().getHeight() - rootView.getHeight();
-                if (heightDiff > 100) {
-                    //大小超过100时，一般为显示虚拟键盘事件
-                    rootView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_VISIBLE);
-                } else {
-                    //大小小于100时，为不显示虚拟键盘或虚拟键盘隐藏
-                    rootView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
-
-                }
-            }
-        });
-        mIjkVideoView = findViewById(R.id.video_view);
+        mScreenRotateUtil = new ScreenRotateUtil(this, this);
+        mScreenRotateUtil.enable();
+        CommonUtil.setViewTreeObserver(rootView); // 虚拟按键的隐藏方法
+        mPlayerView = findViewById(R.id.video_view);
+        mPlayerView.setPlayerListener(this);
         video_view_layout = findViewById(R.id.video_view_layout);
-//        RelativeLayout.LayoutParams params= (RelativeLayout.LayoutParams) video_view_layout.getLayoutParams();
-//        params.height = ScreenUtils.getScreenHeight(this) / 3;
-//        params.width = ViewGroup.LayoutParams.MATCH_PARENT;//设置当前控件布局的高度
-//        video_view_layout.setLayoutParams(params);//将设置好的布局参数应用到控件中
         initPlayer();
     }
 
     private void initPlayer() {
         //初始化播放器
-        player = new PlayerManager(mIjkVideoView,this);
+        player = new PlayerManager(mPlayerView.mIjkVideoView, this);
         player.setScaleType(PlayerManager.SCALETYPE_FILLPARENT);
         player.setPlayerStateListener(this);
         player.live(false);
-        player.play(url4);
+        player.play(UrlUtil.url4);
+        mPlayerView.centerPlay.setVisibility(View.GONE);
+        mPlayerView.startPlayerUI();
     }
 
     @Override
@@ -80,7 +67,7 @@ public class PlayActivity extends AppCompatActivity implements PlayerManager.Pla
 
     @Override
     public void onPlay() {
-
+        mPlayerView.playing();
     }
 
     @Override
@@ -95,5 +82,52 @@ public class PlayActivity extends AppCompatActivity implements PlayerManager.Pla
     protected void onRestart() {
         super.onRestart();
         player.start();
+    }
+
+    @Override
+    public void onPortrait() {
+        setLayoutParams(DisplayUtil.dip2px(this, 202));
+    }
+
+    @Override
+    public void onLandscape() {
+        setLayoutParams(ViewGroup.LayoutParams.MATCH_PARENT);
+    }
+
+    @Override
+    public void onReverseLandscape() {
+        setLayoutParams(ViewGroup.LayoutParams.MATCH_PARENT);
+    }
+
+    private void setLayoutParams(int matchParent) {
+        RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) video_view_layout.getLayoutParams();
+        params.height = matchParent;
+        params.width = ViewGroup.LayoutParams.MATCH_PARENT;//设置当前控件布局的高度
+        video_view_layout.setLayoutParams(params);//将设置好的布局参数应用到控件中
+    }
+
+    @Override
+    public void goBack() {
+        if (ScreenRotateUtil.isLandscape(this)) {
+            mScreenRotateUtil.manualSwitchingPortrait();
+        } else {
+            finish();
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+//        super.onBackPressed();
+        goBack();
+    }
+
+    @Override
+    public void screen(int type) {
+        if (type == 1) { // 到横屏
+            mScreenRotateUtil.manualSwitchingLandscape();
+        } else {
+            mScreenRotateUtil.manualSwitchingPortrait();
+        }
+
     }
 }

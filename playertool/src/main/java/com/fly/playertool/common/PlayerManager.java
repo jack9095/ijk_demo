@@ -13,7 +13,6 @@ public class PlayerManager extends CommonPlayerManager{
     private int currentPosition;  // 当前播放点
     private int status = STATUS_IDLE; // 状态
 
-
     // 初始化
     public PlayerManager(IjkVideoView mIjkVideoView,Context context) {
         super(context,mIjkVideoView);
@@ -51,7 +50,7 @@ public class PlayerManager extends CommonPlayerManager{
                         statusChange(STATUS_PLAYING);
                         break;
                     case IMediaPlayer.MEDIA_INFO_NETWORK_BANDWIDTH:
-                        //显示下载速度
+                        // 显示下载速度
 //                      Toast.show("download rate:" + extra);
                         break;
                     case IMediaPlayer.MEDIA_INFO_VIDEO_RENDERING_START:  // 播放
@@ -76,7 +75,7 @@ public class PlayerManager extends CommonPlayerManager{
 //                }
                 break;
             case STATUS_ERROR:
-                LogUtil.e("statusChange STATUS_ERROR... 错误");
+                LogUtil.e("PlayerManager错误");
                 if (playerStateListener != null){
                     playerStateListener.onError();
                 }
@@ -86,16 +85,16 @@ public class PlayerManager extends CommonPlayerManager{
                 if (playerStateListener != null){
                     playerStateListener.onLoading();
                 }
-                LogUtil.e("statusChange STATUS_LOADING... 加载");
+                LogUtil.e("PlayerManager加载");
                 break;
             case STATUS_PLAYING:
-                LogUtil.e("statusChange STATUS_PLAYING... 播放");
+                LogUtil.e("PlayerManager播放");
                 if (playerStateListener != null){
                     playerStateListener.onPlay();
                 }
                 break;
             case STATUS_PAUSE:
-                LogUtil.e("statusChange STATUS_PAUSE... 暂停");
+                LogUtil.e("PlayerManager暂停");
                 break;
         }
     }

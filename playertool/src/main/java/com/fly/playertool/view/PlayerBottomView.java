@@ -71,12 +71,22 @@ public class PlayerBottomView extends FrameLayout {
         return leftBottomPlayer;
     }
 
-    public View getZoomView(){
+    public ImageView getZoomView(){
         return zoom;
     }
 
     public View getLineView(){
         return stream;
+    }
+
+    // 给seekBar设置进度
+    public void setSeekBarTo(long currentPosition){
+        if (seekBar != null) {
+            if (totalTimeF > 0) {
+                long pos = 1000L * currentPosition / totalTimeF;
+                seekBar.setProgress((int) pos);
+            }
+        }
     }
 
     public void setTotalTime(long totalTime){
@@ -89,14 +99,6 @@ public class PlayerBottomView extends FrameLayout {
         }
     }
 
-    public void setStream(String streams){
-        if (!TextUtils.isEmpty(streams)) {
-            stream.setText(streams);
-        }else {
-            stream.setText("");
-        }
-    }
-
     public void setCurrentTime(long currenttime){
         this.currentTimeF = currenttime;
         String time = CommonUtil.generateTime(currenttime);
@@ -104,6 +106,14 @@ public class PlayerBottomView extends FrameLayout {
             currentTime.setText(time);
         }else {
             currentTime.setText("");
+        }
+    }
+
+    public void setStream(String streams){
+        if (!TextUtils.isEmpty(streams)) {
+            stream.setText(streams);
+        }else {
+            stream.setText("");
         }
     }
 
