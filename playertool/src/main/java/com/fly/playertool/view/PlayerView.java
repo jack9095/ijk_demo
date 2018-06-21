@@ -14,6 +14,7 @@ import com.fly.playertool.utils.LogUtil;
 import com.fly.playertool.utils.NetworkUtils;
 import com.fly.playertool.widget.PlayStateParams;
 import tv.danmaku.ijk.media.player.IMediaPlayer;
+import tv.danmaku.ijk.media.player.IjkMediaPlayer;
 
 /**
  * Created by fei.wang on 2018/6/20.
@@ -23,27 +24,32 @@ public class PlayerView extends BasePlayerView {
 
     public PlayerView(@NonNull Context context) {
         super(context);
-        initView();
         onEventListener();
     }
 
     public PlayerView(@NonNull Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
-        initView();
         onEventListener();
     }
 
     public PlayerView(@NonNull Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        initView();
         onEventListener();
     }
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public PlayerView(@NonNull Context context, @Nullable AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
-        initView();
         onEventListener();
+    }
+
+    public void setStartIjkMediaPlayer(){
+        try {
+            IjkMediaPlayer.loadLibrariesOnce(null);
+            IjkMediaPlayer.native_profileBegin("libijkplayer.so");
+        } catch (Throwable e) {
+            LogUtil.e("GiraffePlayer" + e);
+        }
     }
 
     /**

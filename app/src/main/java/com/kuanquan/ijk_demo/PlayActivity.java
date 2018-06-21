@@ -2,7 +2,13 @@ package com.kuanquan.ijk_demo;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
+import android.widget.RelativeLayout;
+
 import com.fly.playertool.common.PlayerManager;
+import com.fly.playertool.utils.ScreenUtils;
 import com.fly.playertool.widget.IjkVideoView;
 
 public class PlayActivity extends AppCompatActivity implements PlayerManager.PlayerStateListener{
@@ -13,12 +19,38 @@ public class PlayActivity extends AppCompatActivity implements PlayerManager.Pla
     private String url6 = "http://live.hkstv.hk.lxdns.com/live/hks/playlist.m3u8";
     private PlayerManager player;
     private IjkVideoView mIjkVideoView;
+    private RelativeLayout video_view_layout;
+    View rootView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_play);
+        rootView = getLayoutInflater().from(this).inflate(R.layout.activity_play, null);
+        setContentView(rootView);
+        /**虚拟按键的隐藏方法*/
+        rootView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+
+            @Override
+            public void onGlobalLayout() {
+
+                //比较Activity根布局与当前布局的大小
+                int heightDiff = rootView.getRootView().getHeight() - rootView.getHeight();
+                if (heightDiff > 100) {
+                    //大小超过100时，一般为显示虚拟键盘事件
+                    rootView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_VISIBLE);
+                } else {
+                    //大小小于100时，为不显示虚拟键盘或虚拟键盘隐藏
+                    rootView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
+
+                }
+            }
+        });
         mIjkVideoView = findViewById(R.id.video_view);
+        video_view_layout = findViewById(R.id.video_view_layout);
+//        RelativeLayout.LayoutParams params= (RelativeLayout.LayoutParams) video_view_layout.getLayoutParams();
+//        params.height = ScreenUtils.getScreenHeight(this) / 3;
+//        params.width = ViewGroup.LayoutParams.MATCH_PARENT;//设置当前控件布局的高度
+//        video_view_layout.setLayoutParams(params);//将设置好的布局参数应用到控件中
         initPlayer();
     }
 

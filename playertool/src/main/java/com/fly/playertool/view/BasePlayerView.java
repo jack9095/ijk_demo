@@ -47,33 +47,27 @@ public class BasePlayerView extends FrameLayout implements View.OnClickListener{
 
     public BasePlayerView(@NonNull Context context) {
         super(context);
-//        initView();
+        initView();
     }
 
     public BasePlayerView(@NonNull Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
-//        initView();
+        initView();
     }
 
     public BasePlayerView(@NonNull Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-//        initView();
+        initView();
     }
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public BasePlayerView(@NonNull Context context, @Nullable AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
-//        initView();
+        initView();
     }
 
     protected void initView() {
         playerSupport = true; // 支持设备 后期提供方法外调出去
-        try {
-            IjkMediaPlayer.loadLibrariesOnce(null);
-            IjkMediaPlayer.native_profileBegin("libijkplayer.so");
-        } catch (Throwable e) {
-            LogUtil.e("GiraffePlayer" + e);
-        }
         View rootView = LayoutInflater.from(getContext()).inflate(R.layout.player_view_player, this, true);
         mIjkVideoView = rootView.findViewById(R.id.player_view_player_video_view);
         cover = rootView.findViewById(R.id.player_view_player_iv_cover);

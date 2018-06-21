@@ -8,8 +8,9 @@
     android:orientation="vertical">
 
 
-    <com.fly.ijktools.com.fly.playertool.widget.IjkVideoView
+    <com.fly.ijktools.widget.IjkVideoView
         android:id="@+id/video_view"
+        android:background="#00ff00"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 
