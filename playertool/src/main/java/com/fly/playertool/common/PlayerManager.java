@@ -45,6 +45,9 @@ public class PlayerManager extends CommonPlayerManager{
                 switch (what) {
                     case IMediaPlayer.MEDIA_INFO_BUFFERING_START:  // 开始缓存
                         statusChange(STATUS_LOADING);
+//                        if (loadingSpeedText != null) {
+//                            loadingSpeedText.setText(CommonUtil.getFormatSize(extra)); // 显示加载速度
+//                        }
                         break;
                     case IMediaPlayer.MEDIA_INFO_BUFFERING_END:   // 结束缓存
                         statusChange(STATUS_PLAYING);

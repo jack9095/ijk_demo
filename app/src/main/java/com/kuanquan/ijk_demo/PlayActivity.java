@@ -37,6 +37,7 @@ public class PlayActivity extends AppCompatActivity implements PlayerManager.Pla
         mPlayerView = findViewById(R.id.video_view);
         mPlayerView.setPlayerListener(this);
         video_view_layout = findViewById(R.id.video_view_layout);
+        mPlayerView.setActivity(this);
         initPlayer();
     }
 

@@ -12,10 +12,12 @@ import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import com.fly.playertool.R;
 import com.fly.playertool.utils.LogUtil;
 import com.fly.playertool.utils.NetworkUtils;
+import com.fly.playertool.utils.ScreenUtils;
 import com.fly.playertool.widget.IjkVideoView;
 import com.fly.playertool.widget.PlayStateParams;
 
@@ -25,7 +27,7 @@ import tv.danmaku.ijk.media.player.IjkMediaPlayer;
  * Created by fei.wang on 2018/6/20.
  * 播放控件
  */
-public class BasePlayerView extends FrameLayout {
+public class BasePlayerView extends FrameLayout implements View.OnClickListener {
     public IjkVideoView mIjkVideoView; // 播放器的封装 (原生的Ijkplayer)
     public ImageView cover;            // 播放器的封面图片
     public LinearLayout replayLayout;         // 重新播放的布局
@@ -40,6 +42,12 @@ public class BasePlayerView extends FrameLayout {
     public PlayerBottomView mPlayerBottomView;         // 底部栏
     public PlayerLineView mPlayerLineView;         // 分辨率 （高清、标清） 选择
     public ImageView centerPlay;         // 中间的播放标记
+    public RelativeLayout mRelativeLayout;         // 播放器的整个界面的布局
+
+    /**
+     * 获取当前设备的宽度
+     */
+    public int screenWidthPixels;
 
 
     public BasePlayerView(@NonNull Context context) {
@@ -60,11 +68,12 @@ public class BasePlayerView extends FrameLayout {
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public BasePlayerView(@NonNull Context context, @Nullable AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
-//        initView();
+        initView();
     }
 
     protected void initView() {
         View rootView = LayoutInflater.from(getContext()).inflate(R.layout.player_view_player, this, true);
+        mRelativeLayout = rootView.findViewById(R.id.player_view_player);
         mIjkVideoView = rootView.findViewById(R.id.player_view_player_video_view);
         cover = rootView.findViewById(R.id.player_view_player_iv_cover);
         replayLayout = rootView.findViewById(R.id.player_view_player_replay_layout);
@@ -81,13 +90,15 @@ public class BasePlayerView extends FrameLayout {
         centerPlay = rootView.findViewById(R.id.player_view_player_center_icon);
 
         mPlayerBottomView.setIjkVideoView(mIjkVideoView);
-//        replayImage.setOnClickListener(this);
-//        netTieText.setOnClickListener(this);
-//        freeTieText.setOnClickListener(this);
-//        mPlayerTopView.getImageView().setOnClickListener(this);
-//        mPlayerBottomView.getImageView().setOnClickListener(this);
-//        mPlayerBottomView.getZoomView().setOnClickListener(this);
-//        mPlayerBottomView.getLineView().setOnClickListener(this);
+        replayImage.setOnClickListener(this);
+        netTieText.setOnClickListener(this);
+        freeTieText.setOnClickListener(this);
+        mPlayerTopView.getImageView().setOnClickListener(this);
+        mPlayerBottomView.getImageView().setOnClickListener(this);
+        mPlayerBottomView.getZoomView().setOnClickListener(this);
+        mPlayerBottomView.getLineView().setOnClickListener(this);
+
+        screenWidthPixels = ScreenUtils.getScreenWidth(getContext());
     }
 
     /**
@@ -170,6 +181,20 @@ public class BasePlayerView extends FrameLayout {
     }
 
     /**
+     * 同步进度
+     */
+    public long syncProgress() {
+        long position = mIjkVideoView.getCurrentPosition(); // 当前时长
+        long duration = mIjkVideoView.getDuration();  // 视频总时长
+        LogUtil.e(" ***总时长 = *** " + duration);
+        LogUtil.e(" ***开始播放 = *** " + position);
+        mPlayerBottomView.setTotalTime(duration);
+        mPlayerBottomView.setCurrentTime(position);
+        mPlayerBottomView.setSeekBarTo(position);
+        return position;
+    }
+
+    /**
      * 视频播放控件事件回调
      */
     public PlayerListener mPlayerListener;
@@ -179,6 +204,11 @@ public class BasePlayerView extends FrameLayout {
      */
     public void setPlayerListener(PlayerListener playerListener) {
         this.mPlayerListener = playerListener;
+    }
+
+    @Override
+    public void onClick(View view) {
+
     }
 
     public interface PlayerListener {
