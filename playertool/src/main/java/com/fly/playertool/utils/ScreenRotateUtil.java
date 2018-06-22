@@ -5,15 +5,14 @@ import android.content.Context;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.provider.Settings;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.OrientationEventListener;
 import android.view.View;
 
 /**
- * Created by Administrator on 2018/6/21.
+ * Created by fei.wang on 2018/6/21.
+ *
  */
-
 public class ScreenRotateUtil extends OrientationEventListener {
 
     private boolean isBack;  // true 表示在横屏的状态下，按下返回键了，false 表示这时候已经是竖屏了
@@ -77,10 +76,9 @@ public class ScreenRotateUtil extends OrientationEventListener {
      */
     public void manualSwitchingLandscape() {
         currentOreation = ORIENTATION_LANDSCAPE;
-        if (!isBack) {
-            mScreenRotateListener.onLandscape();
-        }
+        mScreenRotateListener.onLandscape();
         ((Activity) mContext).setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+        ((Activity) mContext).getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_FULLSCREEN);
     }
 
     /**
@@ -89,8 +87,8 @@ public class ScreenRotateUtil extends OrientationEventListener {
     public void manualSwitchingPortrait() {
         currentOreation = ORIENTATION_PORTRAIT;
         mScreenRotateListener.onPortrait();
-        isBack = false;
         ((Activity) mContext).setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        ((Activity) mContext).getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_VISIBLE);
     }
 
     @Override
@@ -99,42 +97,42 @@ public class ScreenRotateUtil extends OrientationEventListener {
         if (((orientation >= 0) && (orientation < 45)) || (orientation > 315)) { // 设置竖屏
             if (currentOreation != ORIENTATION_PORTRAIT) {
                 if (checkIsSystemOrientationEnabled()) {
-                    currentOreation = ORIENTATION_PORTRAIT;
-                    LogUtil.e("ScreenRotateUtil", "设置竖屏screenOrientation = " + screenOrientation);
                     if (!isBack) {
+                        currentOreation = ORIENTATION_PORTRAIT;
+                        LogUtil.e("ScreenRotateUtil", "设置竖屏screenOrientation = " + screenOrientation);
                         mScreenRotateListener.onPortrait();
+                        ((Activity) mContext).setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+                        // 显示状态栏
+                        ((Activity) mContext).getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_VISIBLE);
                     }
-                    isBack = false;
-                    ((Activity) mContext).setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-                    // 显示状态栏
-                    ((Activity) mContext).getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_VISIBLE);
                 }
             }
+            isBack = false;
         } else if (orientation > 225 && orientation < 315) { // 设置横屏
             if (currentOreation != ORIENTATION_LANDSCAPE) {
                 if (checkIsSystemOrientationEnabled()) {
-                    currentOreation = ORIENTATION_LANDSCAPE;
-                    LogUtil.e("ScreenRotateUtil", "设置横屏screenOrientation = " + screenOrientation);
                     if (!isBack) {
+                        currentOreation = ORIENTATION_LANDSCAPE;
+                        LogUtil.e("ScreenRotateUtil", "设置横屏screenOrientation = " + screenOrientation);
                         mScreenRotateListener.onLandscape();
+                        ((Activity) mContext).setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+                        // 隐藏状态栏
+                        ((Activity) mContext).getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_FULLSCREEN);
                     }
-                    ((Activity) mContext).setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
-                    // 隐藏状态栏
-                    ((Activity) mContext).getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_FULLSCREEN);
                 }
             }
 
         } else if (orientation > 45 && orientation < 135) {  // 设置反向横屏
             if (currentOreation != ORIENTATION_REVERSE_LANDSCAPE) {
                 if (checkIsSystemOrientationEnabled()) {
-                    currentOreation = ORIENTATION_REVERSE_LANDSCAPE;
-                    LogUtil.e("ScreenRotateUtil", "设置反向横屏screenOrientation = " + screenOrientation);
                     if (!isBack) {
+                        currentOreation = ORIENTATION_REVERSE_LANDSCAPE;
+                        LogUtil.e("ScreenRotateUtil", "设置反向横屏screenOrientation = " + screenOrientation);
                         mScreenRotateListener.onReverseLandscape();
+                        ((Activity) mContext).setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_REVERSE_LANDSCAPE);
+                        // 隐藏状态栏
+                        ((Activity) mContext).getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_FULLSCREEN);
                     }
-                    ((Activity) mContext).setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_REVERSE_LANDSCAPE);
-                    // 隐藏状态栏
-                    ((Activity) mContext).getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_FULLSCREEN);
                 }
             }
         }

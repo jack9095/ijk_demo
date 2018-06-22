@@ -17,4 +17,9 @@ public interface HandlerWhat {
      * 重新播放
      */
     int MESSAGE_RESTART_PLAY = 5;
+
+    /**
+     * 隐藏手势出现的布局  （声音、亮度、快进快退）
+     */
+    int MESSAGE_HIDE_CENTER_BOX = 6;
 }

@@ -877,8 +877,8 @@ public class IjkVideoView extends FrameLayout implements MediaController.MediaPl
     }
 
     private boolean isInPlaybackState() {
-        LogUtil.e("mMediaPlayer = " + mMediaPlayer);
-        LogUtil.e("mCurrentState = " + mCurrentState);
+//        LogUtil.e("mMediaPlayer = " + mMediaPlayer);
+//        LogUtil.e("mCurrentState = " + mCurrentState);
         return (mMediaPlayer != null &&
                 mCurrentState != STATE_ERROR &&
                 mCurrentState != STATE_IDLE &&

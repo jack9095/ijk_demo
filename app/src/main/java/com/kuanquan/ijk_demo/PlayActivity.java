@@ -22,14 +22,13 @@ public class PlayActivity extends AppCompatActivity implements PlayerManager.Pla
     private PlayerManager player;
     private PlayerView mPlayerView;
     private RelativeLayout video_view_layout;
-    private View rootView;
     private ScreenRotateUtil mScreenRotateUtil;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         super.onCreate(savedInstanceState);
-        rootView = getLayoutInflater().from(this).inflate(R.layout.activity_play, null);
+        View rootView = getLayoutInflater().from(this).inflate(R.layout.activity_play, null);
         setContentView(rootView);
         mScreenRotateUtil = new ScreenRotateUtil(this, this);
         mScreenRotateUtil.enable();
@@ -42,14 +41,13 @@ public class PlayActivity extends AppCompatActivity implements PlayerManager.Pla
     }
 
     private void initPlayer() {
-        //初始化播放器
+        //初始化播放器管理
         player = new PlayerManager(mPlayerView.mIjkVideoView, this);
         player.setScaleType(PlayerManager.SCALETYPE_FILLPARENT);
         player.setPlayerStateListener(this);
         player.live(false);
         player.play(UrlUtil.url4);
         mPlayerView.centerPlay.setVisibility(View.GONE);
-        mPlayerView.startPlayerUI();
     }
 
     @Override
@@ -69,6 +67,7 @@ public class PlayActivity extends AppCompatActivity implements PlayerManager.Pla
 
     @Override
     public void onPlay() {
+        mPlayerView.startPlayerUI();
         mPlayerView.playing();
     }
 
@@ -111,6 +110,7 @@ public class PlayActivity extends AppCompatActivity implements PlayerManager.Pla
     @Override
     public void goBack() {
         if (ScreenRotateUtil.isLandscape(this)) {
+            mScreenRotateUtil.setBack(true);
             mScreenRotateUtil.manualSwitchingPortrait();
         } else {
             finish();
@@ -119,7 +119,6 @@ public class PlayActivity extends AppCompatActivity implements PlayerManager.Pla
 
     @Override
     public void onBackPressed() {
-//        super.onBackPressed();
         goBack();
     }
 
@@ -132,4 +131,9 @@ public class PlayActivity extends AppCompatActivity implements PlayerManager.Pla
         }
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mScreenRotateUtil.disable();
+    }
 }

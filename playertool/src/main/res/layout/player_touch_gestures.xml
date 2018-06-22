@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout
-    android:id="@+id/app_video_center_box"
+    android:id="@+id/player_touch_gestures_fl"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
@@ -8,7 +8,7 @@
     android:gravity="center_vertical">
     <!-- 声音-->
     <LinearLayout
-        android:id="@+id/app_video_volume_box"
+        android:id="@+id/player_touch_gestures_volume_ll"
         android:layout_width="80dp"
         android:layout_height="80dp"
         android:gravity="center"
@@ -17,14 +17,14 @@
         >
 
         <ImageView
-            android:id="@+id/app_video_volume_icon"
+            android:id="@+id/player_touch_gestures_volume_icon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:src="@drawable/player_volume_up_white"/>
 
         <TextView
-            android:id="@+id/app_video_volume"
+            android:id="@+id/player_touch_gestures_volume"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="50%"
@@ -34,26 +34,24 @@
 
     <!-- 亮度-->
     <LinearLayout
-        android:id="@+id/app_video_brightness_box"
+        android:id="@+id/player_touch_gestures_brightness_ll"
         android:layout_width="80dp"
         android:layout_height="80dp"
         android:gravity="center"
         android:orientation="vertical"
-        android:visibility="gone"
-        >
+        android:visibility="gone">
 
         <ImageView
-            android:id="@+id/app_video_brightness_icon"
+            android:id="@+id/player_touch_gestures_brightness_icon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:src="@drawable/player_brightness_white"/>
 
         <TextView
-            android:id="@+id/app_video_brightness"
+            android:id="@+id/player_touch_gestures_brightness"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/operation_bg"
             android:paddingTop="8dp"
             android:text="50%"
             android:textColor="@android:color/white"
@@ -62,7 +60,7 @@
 
     <!-- 快进快退-->
     <LinearLayout
-        android:id="@+id/app_video_fastForward_box"
+        android:id="@+id/player_touch_gestures_fastForward_ll"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
@@ -70,15 +68,15 @@
         android:orientation="vertical"
         android:visibility="gone">
 
+        <!--快进或者快退了多少-->
         <TextView
-            android:id="@+id/app_video_fastForward"
+            android:id="@+id/player_touch_gestures_fastForward"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/operation_bg"
             android:paddingTop="8dp"
             android:text="50%"
             android:textColor="@android:color/white"
-            android:textSize="16dp"/>
+            android:textSize="16sp"/>
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -86,25 +84,23 @@
             android:orientation="horizontal"
             android:paddingTop="8dp">
 
+            <!--当前的播放点-->
             <TextView
-                android:id="@+id/app_video_fastForward_target"
+                android:id="@+id/player_touch_gestures_fastForward_target"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="50%"
                 android:textColor="@android:color/white"
                 android:textSize="16dp"/>
 
+            <!--视频总时长-->
             <TextView
-                android:id="@+id/app_video_fastForward_all"
+                android:id="@+id/player_touch_gestures_fastForward_all"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="50%"
                 android:textColor="@color/Grey_300"
                 android:textSize="16dp"/>
-
         </LinearLayout>
-
     </LinearLayout>
-
-
 </FrameLayout>

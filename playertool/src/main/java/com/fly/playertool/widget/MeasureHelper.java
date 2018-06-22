@@ -22,6 +22,9 @@ import android.view.View;
 
 import java.lang.ref.WeakReference;
 
+/**
+ * 绘制或者说渲染播放器宽高的类  重要方法 doMeasure
+ */
 public final class MeasureHelper {
     private WeakReference<View> mWeakView;
 
@@ -72,8 +75,14 @@ public final class MeasureHelper {
         //        + MeasureSpec.toString(heightMeasureSpec) + ")");
         if (mVideoRotationDegree == 90 || mVideoRotationDegree == 270) {
             int tempSpec = widthMeasureSpec;
+            // 这是编译出来默认的
             widthMeasureSpec  = heightMeasureSpec;
             heightMeasureSpec = tempSpec;
+
+            //  TODO 这样竖屏也能像斗鱼直播那样竖屏全屏了
+//            mMeasuredWidth = widthMeasureSpec;
+//            mMeasuredHeight = heightMeasureSpec;
+
         }
 
         int width = View.getDefaultSize(mVideoWidth, widthMeasureSpec);
@@ -200,6 +209,10 @@ public final class MeasureHelper {
 
         mMeasuredWidth = width;
         mMeasuredHeight = height;
+
+        // TODO 这样竖屏也能像斗鱼直播那样竖屏全屏了
+//        mMeasuredWidth = widthMeasureSpec;
+//        mMeasuredHeight = heightMeasureSpec;
     }
 
     public int getMeasuredWidth() {

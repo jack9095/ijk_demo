@@ -48,7 +48,6 @@ public class CommonPlayerManager {
     /*******************************************************************************************************/
     /*******************************************************************************************************/
 
-    public long defaultRetryTime = 5000;
     public AudioManager audioManager;  // 音频管理
     public final int mMaxVolume;     // 最大音量
     public int screenWidthPixels;    // 屏幕实际宽度

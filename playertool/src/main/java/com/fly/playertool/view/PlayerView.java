@@ -18,6 +18,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
 import com.fly.playertool.R;
+import com.fly.playertool.utils.CommonUtil;
 import com.fly.playertool.utils.HandlerWhat;
 import com.fly.playertool.utils.LogUtil;
 import com.fly.playertool.utils.ScreenRotateUtil;
@@ -84,15 +85,14 @@ public class PlayerView extends BasePlayerView{
         @Override
         public void handleMessage(Message msg) {
             switch (msg.what) {
-
-                /**滑动完成，设置播放进度*/
+                // 滑动完成，设置播放进度
                 case HandlerWhat.MESSAGE_SEEK_NEW_POSITION:
-//                    if (!isLive && newPosition >= 0) {
-//                        videoView.seekTo((int) newPosition);
-//                        newPosition = -1;
-//                    }
+                    if (newPosition >= 0) {
+                        mIjkVideoView.seekTo((int) newPosition);
+                        newPosition = -1;
+                    }
                     break;
-                /**滑动中，同步播放进度*/
+                // 滑动中，同步播放进度
                 case HandlerWhat.MESSAGE_SHOW_PROGRESS:
                     long pos = syncProgress();
                     if (mIjkVideoView.isPlaying()) {
@@ -100,11 +100,16 @@ public class PlayerView extends BasePlayerView{
                         sendMessageDelayed(msg, 1000 - (pos % 1000));
                     }
                     break;
-                /**重新去播放*/
+                // 重新去播放
                 case HandlerWhat.MESSAGE_RESTART_PLAY:
 //                    status = PlayStateParams.STATE_ERROR;
 //                    startPlay();
 //                    updatePausePlay();
+                    break;
+                case HandlerWhat.MESSAGE_HIDE_CENTER_BOX:
+                    fastForwardLinearLayout.setVisibility(View.GONE);
+                    brightnessLinearLayout.setVisibility(View.GONE);
+                    volumeLinearLayout.setVisibility(View.GONE);
                     break;
             }
         }
@@ -129,6 +134,7 @@ public class PlayerView extends BasePlayerView{
 
         mPlayerBottomView.setHandler(mHandler);
 
+        // 开始手势
         final GestureDetector gestureDetector = new GestureDetector(getContext(), new PlayerGestureListener());
         mRelativeLayout.setClickable(true);
         mRelativeLayout.setOnTouchListener(new View.OnTouchListener() {
@@ -309,11 +315,12 @@ public class PlayerView extends BasePlayerView{
             s = "off";
         }
         // 显示
-//        query.id(R.id.app_video_volume_icon).image(i == 0 ? R.drawable.simple_player_volume_off_white_36dp : R.drawable.simple_player_volume_up_white_36dp);
-//        query.id(R.id.app_video_brightness_box).gone();
-//        query.id(R.id.app_video_volume_box).visible();
-//        query.id(R.id.app_video_volume_box).visible();
-//        query.id(R.id.app_video_volume).text(s).visible();
+        volumeIcon.setImageResource(i == 0 ? R.drawable.player_volume_off_white : R.drawable.player_volume_up_white);
+        brightnessLinearLayout.setVisibility(View.GONE);
+        fastForwardLinearLayout.setVisibility(View.GONE);
+        volumeLinearLayout.setVisibility(View.VISIBLE);
+        volumeText.setVisibility(View.VISIBLE);
+        volumeText.setText(s);
     }
 
     /**
@@ -335,11 +342,13 @@ public class PlayerView extends BasePlayerView{
         }
         int showDelta = (int) delta / 1000;
         if (showDelta != 0) {
-//            query.id(R.id.app_video_fastForward_box).visible();
-//            String text = showDelta > 0 ? ("+" + showDelta) : "" + showDelta;
-//            query.id(R.id.app_video_fastForward).text(text + "s");
-//            query.id(R.id.app_video_fastForward_target).text(generateTime(newPosition) + "/");
-//            query.id(R.id.app_video_fastForward_all).text(generateTime(duration));
+            fastForwardLinearLayout.setVisibility(View.VISIBLE);
+            brightnessLinearLayout.setVisibility(View.GONE);
+            volumeLinearLayout.setVisibility(View.GONE);
+            String text = showDelta > 0 ? ("+" + showDelta) : "" + showDelta;
+            fastForwardText.setText(text + "s");
+            currentTimePosition.setText(CommonUtil.generateTime(newPosition) + "/");
+            totalTimePosition.setText(CommonUtil.generateTime(duration));
         }
     }
 
@@ -358,7 +367,9 @@ public class PlayerView extends BasePlayerView{
             }
         }
         Log.d(this.getClass().getSimpleName(), "brightness:" + brightness + ",percent:" + percent);
-//        query.id(R.id.app_video_brightness_box).visible();
+        brightnessLinearLayout.setVisibility(View.VISIBLE);
+        fastForwardLinearLayout.setVisibility(View.GONE);
+        volumeLinearLayout.setVisibility(View.GONE);
         WindowManager.LayoutParams lpa = mActivity.getWindow().getAttributes();
         lpa.screenBrightness = brightness + percent;
         if (lpa.screenBrightness > 1.0f) {
@@ -366,7 +377,7 @@ public class PlayerView extends BasePlayerView{
         } else if (lpa.screenBrightness < 0.01f) {
             lpa.screenBrightness = 0.01f;
         }
-//        query.id(R.id.app_video_brightness).text(((int) (lpa.screenBrightness * 100)) + "%");
+        brightnessText.setText(((int) (lpa.screenBrightness * 100)) + "%");
         mActivity.getWindow().setAttributes(lpa);
     }
 
@@ -379,14 +390,11 @@ public class PlayerView extends BasePlayerView{
         if (newPosition >= 0) {
             mHandler.removeMessages(HandlerWhat.MESSAGE_SEEK_NEW_POSITION);
             mHandler.sendEmptyMessage(HandlerWhat.MESSAGE_SEEK_NEW_POSITION);
-        } else {
-            // 什么都不做(do nothing)
         }
-//        mHandler.removeMessages(HandlerWhat.MESSAGE_HIDE_CENTER_BOX);
-//        mHandler.sendEmptyMessageDelayed(HandlerWhat.MESSAGE_HIDE_CENTER_BOX, 500);
+        mHandler.removeMessages(HandlerWhat.MESSAGE_HIDE_CENTER_BOX);
+        mHandler.sendEmptyMessageDelayed(HandlerWhat.MESSAGE_HIDE_CENTER_BOX, 500);
 //        if (mAutoPlayRunnable != null) {
 //            mAutoPlayRunnable.start();
 //        }
-
     }
 }

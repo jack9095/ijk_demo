@@ -1,4 +1,4 @@
-package com.kuanquan.ijk_demo;
+package com.kuanquan.ijk_demo.app;
 
 import android.app.Application;
 

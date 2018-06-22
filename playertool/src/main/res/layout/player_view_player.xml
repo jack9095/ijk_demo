@@ -143,7 +143,6 @@
         layout="@layout/player_touch_gestures"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:visibility="gone"
         android:layout_centerInParent="true" />
 
     <!-- 顶部栏-->

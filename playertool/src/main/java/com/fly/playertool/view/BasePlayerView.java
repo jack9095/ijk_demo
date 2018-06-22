@@ -44,11 +44,24 @@ public class BasePlayerView extends FrameLayout implements View.OnClickListener 
     public ImageView centerPlay;         // 中间的播放标记
     public RelativeLayout mRelativeLayout;         // 播放器的整个界面的布局
 
+    // 触摸手势
+    public LinearLayout volumeLinearLayout;// 声音布局
+    public ImageView volumeIcon;// 声音icon
+    public TextView volumeText;// 声音大小
+
+    public LinearLayout brightnessLinearLayout;// 亮度布局
+    public ImageView brightnessIcon;// 亮度icon
+    public TextView brightnessText;// 亮度大小
+
+    public LinearLayout fastForwardLinearLayout;// 快进快退布局
+    public TextView fastForwardText;// 快进或者快退了多少
+    public TextView currentTimePosition;// 当前的播放点
+    public TextView totalTimePosition;// 视频总时长
+
     /**
      * 获取当前设备的宽度
      */
     public int screenWidthPixels;
-
 
     public BasePlayerView(@NonNull Context context) {
         super(context);
@@ -88,6 +101,16 @@ public class BasePlayerView extends FrameLayout implements View.OnClickListener 
         mPlayerBottomView = rootView.findViewById(R.id.player_view_player_play_bottom_view);
         mPlayerLineView = rootView.findViewById(R.id.player_view_player_play_line_view);
         centerPlay = rootView.findViewById(R.id.player_view_player_center_icon);
+        volumeLinearLayout = rootView.findViewById(R.id.player_touch_gestures_volume_ll);
+        volumeIcon = rootView.findViewById(R.id.player_touch_gestures_volume_icon);
+        volumeText = rootView.findViewById(R.id.player_touch_gestures_volume);
+        brightnessLinearLayout = rootView.findViewById(R.id.player_touch_gestures_brightness_ll);
+        brightnessIcon = rootView.findViewById(R.id.player_touch_gestures_brightness_icon);
+        brightnessText = rootView.findViewById(R.id.player_touch_gestures_brightness);
+        fastForwardLinearLayout = rootView.findViewById(R.id.player_touch_gestures_fastForward_ll);
+        fastForwardText = rootView.findViewById(R.id.player_touch_gestures_fastForward);
+        currentTimePosition = rootView.findViewById(R.id.player_touch_gestures_fastForward_target);
+        totalTimePosition = rootView.findViewById(R.id.player_touch_gestures_fastForward_all);
 
         mPlayerBottomView.setIjkVideoView(mIjkVideoView);
         replayImage.setOnClickListener(this);
@@ -164,7 +187,7 @@ public class BasePlayerView extends FrameLayout implements View.OnClickListener 
     }
 
     /**
-     * 暂停状态界面
+     * 播放状态界面
      */
     public void startPlayerUI() {
         mPlayerBottomView.getImageView().setImageResource(R.drawable.player_left_bottom_pause);
@@ -186,8 +209,8 @@ public class BasePlayerView extends FrameLayout implements View.OnClickListener 
     public long syncProgress() {
         long position = mIjkVideoView.getCurrentPosition(); // 当前时长
         long duration = mIjkVideoView.getDuration();  // 视频总时长
-        LogUtil.e(" ***总时长 = *** " + duration);
-        LogUtil.e(" ***开始播放 = *** " + position);
+//        LogUtil.e(" ***总时长 = *** " + duration);
+//        LogUtil.e(" ***开始播放 = *** " + position);
         mPlayerBottomView.setTotalTime(duration);
         mPlayerBottomView.setCurrentTime(position);
         mPlayerBottomView.setSeekBarTo(position);
