@@ -1,5 +1,5 @@
 include ':app'
 include ':ijkplayer-java'
-include ':ijkplayer_tools'
-include ':test'
+//include ':ijkplayer_tools'
+//include ':test'
 include ':playertool'

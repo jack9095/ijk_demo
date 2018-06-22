@@ -6,7 +6,6 @@ import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.provider.Settings;
 import android.view.OrientationEventListener;
-import android.view.View;
 import android.view.WindowManager;
 
 /**
