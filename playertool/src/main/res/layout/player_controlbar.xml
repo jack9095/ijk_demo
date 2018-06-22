@@ -39,8 +39,6 @@
         android:layout_toRightOf="@id/player_bottom_bar_currentTime"
         android:layout_toLeftOf="@id/player_bottom_bar_endTime"
         android:layout_centerVertical="true"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
         style="@style/SeekBarAppTheme"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />

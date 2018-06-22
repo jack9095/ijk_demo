@@ -14,7 +14,7 @@ public class PlayerManager extends CommonPlayerManager{
     private int status = STATUS_IDLE; // 状态
 
     // 初始化
-    public PlayerManager(IjkVideoView mIjkVideoView,Context context) {
+    public PlayerManager(IjkVideoView mIjkVideoView, Context context) {
         super(context,mIjkVideoView);
         try {
             IjkMediaPlayer.loadLibrariesOnce(null);

@@ -15,14 +15,12 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import com.fly.playertool.R;
-import com.fly.playertool.common.PlayerManager;
 import com.fly.playertool.utils.LogUtil;
 import com.fly.playertool.utils.NetworkUtils;
 import com.fly.playertool.utils.ScreenUtils;
 import com.fly.playertool.widget.IRenderView;
 import com.fly.playertool.widget.IjkVideoView;
 import com.fly.playertool.widget.PlayStateParams;
-
 import tv.danmaku.ijk.media.player.IjkMediaPlayer;
 
 /**

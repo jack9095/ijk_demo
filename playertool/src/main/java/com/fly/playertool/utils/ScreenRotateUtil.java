@@ -155,6 +155,8 @@ public class ScreenRotateUtil extends OrientationEventListener {
                     }
                 }
             }
+        }else{
+
         }
     }
 
