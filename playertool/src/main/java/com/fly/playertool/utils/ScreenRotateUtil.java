@@ -5,13 +5,13 @@ import android.content.Context;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.provider.Settings;
-import android.util.Log;
 import android.view.OrientationEventListener;
 import android.view.View;
+import android.view.WindowManager;
 
 /**
  * Created by fei.wang on 2018/6/21.
- *
+ * 屏幕旋转工具类
  */
 public class ScreenRotateUtil extends OrientationEventListener {
 
@@ -20,13 +20,29 @@ public class ScreenRotateUtil extends OrientationEventListener {
     private static final int ORIENTATION_LANDSCAPE = 2;     // 横屏
     private static final int ORIENTATION_REVERSE_LANDSCAPE = 3; // 反向横屏
     private int currentOreation = ORIENTATION_PORTRAIT; //当前重力感应方向
-    private Context mContext;
+    private Activity mContext;
+    private final WindowManager.LayoutParams attrs;
 
-    public ScreenRotateUtil(Context context, ScreenRotateListener mScreenRotateListener) {
+    public ScreenRotateUtil(Activity context, ScreenRotateListener mScreenRotateListener) {
         super(context);
         mContext = context;
         this.mScreenRotateListener = mScreenRotateListener;
+
+        attrs = mContext.getWindow().getAttributes();  // 是否全屏
     }
+
+    private void fullScreen(){
+        attrs.flags |= WindowManager.LayoutParams.FLAG_FULLSCREEN;
+        mContext.getWindow().setAttributes(attrs);
+        mContext.getWindow().addFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
+    }
+
+    private void noFullScreen(){
+        attrs.flags &= (~WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        mContext.getWindow().setAttributes(attrs);
+        mContext.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
+    }
+
 
     // 开启监听  建议activity的onCreate方法中调用
     @Override
@@ -77,8 +93,9 @@ public class ScreenRotateUtil extends OrientationEventListener {
     public void manualSwitchingLandscape() {
         currentOreation = ORIENTATION_LANDSCAPE;
         mScreenRotateListener.onLandscape();
-        ((Activity) mContext).setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
-        ((Activity) mContext).getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_FULLSCREEN);
+        mContext.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+        fullScreen();
+//        ((Activity) mContext).getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_FULLSCREEN);
     }
 
     /**
@@ -87,8 +104,9 @@ public class ScreenRotateUtil extends OrientationEventListener {
     public void manualSwitchingPortrait() {
         currentOreation = ORIENTATION_PORTRAIT;
         mScreenRotateListener.onPortrait();
-        ((Activity) mContext).setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-        ((Activity) mContext).getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_VISIBLE);
+        mContext.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        noFullScreen();
+//        mContext.getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_VISIBLE);
     }
 
     @Override
@@ -100,10 +118,11 @@ public class ScreenRotateUtil extends OrientationEventListener {
                     if (!isBack) {
                         currentOreation = ORIENTATION_PORTRAIT;
                         LogUtil.e("ScreenRotateUtil", "设置竖屏screenOrientation = " + screenOrientation);
-                        mScreenRotateListener.onPortrait();
-                        ((Activity) mContext).setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+                        mContext.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
                         // 显示状态栏
-                        ((Activity) mContext).getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_VISIBLE);
+                        noFullScreen();
+//                        mContext.getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_VISIBLE);
+                        mScreenRotateListener.onPortrait();
                     }
                 }
             }
@@ -114,24 +133,25 @@ public class ScreenRotateUtil extends OrientationEventListener {
                     if (!isBack) {
                         currentOreation = ORIENTATION_LANDSCAPE;
                         LogUtil.e("ScreenRotateUtil", "设置横屏screenOrientation = " + screenOrientation);
-                        mScreenRotateListener.onLandscape();
-                        ((Activity) mContext).setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+                        mContext.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
                         // 隐藏状态栏
-                        ((Activity) mContext).getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_FULLSCREEN);
+                        fullScreen();
+//                        mContext.getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_FULLSCREEN);
+                        mScreenRotateListener.onLandscape();
                     }
                 }
             }
-
         } else if (orientation > 45 && orientation < 135) {  // 设置反向横屏
             if (currentOreation != ORIENTATION_REVERSE_LANDSCAPE) {
                 if (checkIsSystemOrientationEnabled()) {
                     if (!isBack) {
                         currentOreation = ORIENTATION_REVERSE_LANDSCAPE;
                         LogUtil.e("ScreenRotateUtil", "设置反向横屏screenOrientation = " + screenOrientation);
-                        mScreenRotateListener.onReverseLandscape();
-                        ((Activity) mContext).setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_REVERSE_LANDSCAPE);
+                        mContext.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_REVERSE_LANDSCAPE);
                         // 隐藏状态栏
-                        ((Activity) mContext).getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_FULLSCREEN);
+                        fullScreen();
+//                        mContext.getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_FULLSCREEN);
+                        mScreenRotateListener.onLandscape();
                     }
                 }
             }
@@ -145,6 +165,6 @@ public class ScreenRotateUtil extends OrientationEventListener {
 
         void onLandscape();          // 横屏
 
-        void onReverseLandscape();   // 反向横屏
+//        void onReverseLandscape();   // 反向横屏
     }
 }

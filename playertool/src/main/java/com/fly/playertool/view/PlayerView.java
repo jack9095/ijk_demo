@@ -134,30 +134,40 @@ public class PlayerView extends BasePlayerView{
 
         mPlayerBottomView.setHandler(mHandler);
 
+        mHandler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                hideViewAll();
+            }
+        },5000);
+
         // 开始手势
         final GestureDetector gestureDetector = new GestureDetector(getContext(), new PlayerGestureListener());
         mRelativeLayout.setClickable(true);
-        mRelativeLayout.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
-                switch (motionEvent.getAction() & MotionEvent.ACTION_MASK) {
-                    case MotionEvent.ACTION_DOWN:
-//                        if (mAutoPlayRunnable != null) {
-//                            mAutoPlayRunnable.stop();
-//                        }
-                        break;
-                }
-                if (gestureDetector.onTouchEvent(motionEvent))
-                    return true;
-                // 处理手势结束
-                switch (motionEvent.getAction() & MotionEvent.ACTION_MASK) {
-                    case MotionEvent.ACTION_UP:
-                        endGesture();
-                        break;
-                }
-                return false;
-            }
-        });
+        mRelativeLayout.setOnClickListener(this);
+//        setFocusable(true);
+//        setFocusableInTouchMode(true);
+//        mRelativeLayout.setOnTouchListener(new View.OnTouchListener() {
+//            @Override
+//            public boolean onTouch(View view, MotionEvent motionEvent) {
+////                switch (motionEvent.getAction() & MotionEvent.ACTION_MASK) {
+////                    case MotionEvent.ACTION_DOWN:
+//////                        if (mAutoPlayRunnable != null) {
+//////                            mAutoPlayRunnable.stop();
+//////                        }
+////                        break;
+////                }
+//                if (gestureDetector.onTouchEvent(motionEvent))
+//                    return true;
+//                // 处理手势结束
+//                switch (motionEvent.getAction() & MotionEvent.ACTION_MASK) {
+//                    case MotionEvent.ACTION_UP:
+//                        endGesture();
+//                        break;
+//                }
+//                return false;
+//            }
+//        });
     }
 
     @Override
@@ -196,6 +206,10 @@ public class PlayerView extends BasePlayerView{
 
         } else if (v.getId() == R.id.player_view_player_video_freeTie_icon) {
             // 购买会员
+        }else if (v.getId() == R.id.player_view_player) {  // 最外层布局点击事件
+            mRelativeLayout.setClickable(true);
+            hideShowViewAll();
+            LogUtil.e("***** 最外层布局点击事件 ***** = ",indexnnn++);
         }
     }
 
@@ -204,6 +218,8 @@ public class PlayerView extends BasePlayerView{
 /********************************************************************************************************/
 
 
+int index;
+int indexnnn;
     /**
      * 播放器的手势监听
      */
@@ -240,6 +256,8 @@ public class PlayerView extends BasePlayerView{
         @Override
         public boolean onDown(MotionEvent e) {
             isDownTouch = true;
+
+            LogUtil.e("***** 按下 *****", index++);
             return super.onDown(e);
         }
 
@@ -283,6 +301,8 @@ public class PlayerView extends BasePlayerView{
             // 视频视窗单击事件
             if (!isForbidTouch) {
                 // 显示和隐藏操作面板
+                hideShowViewAll();
+                LogUtil.e("***** 单击事件 ***** = ",indexnnn++);
             }
             return true;
         }

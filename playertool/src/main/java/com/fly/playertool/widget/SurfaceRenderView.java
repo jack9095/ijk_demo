@@ -102,6 +102,8 @@ public class SurfaceRenderView extends SurfaceView implements IRenderView {
 
     @Override
     public void setVideoRotation(int degree) {
+//        mMeasureHelper.setVideoRotation(degree);
+//        setRotation(degree);
 //        LogUtil.e("", "SurfaceView doesn't support rotation (" + degree + ")!\n");
         LogUtil.e("", "SurfaceView 不支持旋转 (" + degree + ")!\n");
     }

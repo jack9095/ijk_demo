@@ -71,6 +71,7 @@ public class PlayerBottomView extends FrameLayout {
 
         seekBar.setMax(1000);
         seekBar.setOnSeekBarChangeListener(mSeekListener);
+
     }
 
     public ImageView getImageView(){

@@ -15,9 +15,11 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import com.fly.playertool.R;
+import com.fly.playertool.common.PlayerManager;
 import com.fly.playertool.utils.LogUtil;
 import com.fly.playertool.utils.NetworkUtils;
 import com.fly.playertool.utils.ScreenUtils;
+import com.fly.playertool.widget.IRenderView;
 import com.fly.playertool.widget.IjkVideoView;
 import com.fly.playertool.widget.PlayStateParams;
 
@@ -62,6 +64,10 @@ public class BasePlayerView extends FrameLayout implements View.OnClickListener 
      * 获取当前设备的宽度
      */
     public int screenWidthPixels;
+    /**
+     * 视频旋转的角度，默认只有0,90.270分别对应向上、向左、向右三个方向
+     */
+    public int rotation = 0;
 
     public BasePlayerView(@NonNull Context context) {
         super(context);
@@ -156,10 +162,28 @@ public class BasePlayerView extends FrameLayout implements View.OnClickListener 
     /**
      * 隐藏所有界面
      */
-    protected void hideAll() {
+    protected void hideViewAll() {
         mPlayerTopView.setVisibility(View.GONE);    // 顶部标题栏布局的控制
         mPlayerBottomView.setVisibility(View.GONE); // 底部导航栏布局的控制
         hideStatusUI();
+    }
+
+    /**
+     * 显示标题状态栏
+     */
+    public void hideShowViewAll() {
+
+        if (mPlayerTopView.getVisibility() == View.VISIBLE) {
+            mPlayerTopView.setVisibility(View.GONE);    // 顶部标题栏布局的控制
+        }else{
+            mPlayerTopView.setVisibility(View.VISIBLE);    // 顶部标题栏布局的控制
+        }
+
+        if (mPlayerBottomView.getVisibility() == View.VISIBLE) {
+            mPlayerBottomView.setVisibility(View.GONE);    // 底部标题栏布局的控制
+        }else{
+            mPlayerBottomView.setVisibility(View.VISIBLE);    // 底部标题栏布局的控制
+        }
     }
 
     /**
@@ -218,6 +242,30 @@ public class BasePlayerView extends FrameLayout implements View.OnClickListener 
     }
 
     /**
+     * 旋转角度
+     */
+    public void setPlayerRotation() {
+        if (rotation == 0) {
+            rotation = 90;
+        } else if (rotation == 90) {
+            rotation = 270;
+        } else if (rotation == 270) {
+            rotation = 0;
+        }
+        setPlayerRotation(rotation);
+    }
+
+    /**
+     * 旋转指定角度
+     */
+    public void setPlayerRotation(int rotation) {
+        if (mIjkVideoView != null) {
+            mIjkVideoView.setPlayerRotation(rotation);
+            mIjkVideoView.setAspectRatio(IRenderView.AR_ASPECT_FIT_PARENT);  // 视频显示比例,默认保持原视频的大小
+        }
+    }
+
+    /**
      * 视频播放控件事件回调
      */
     public PlayerListener mPlayerListener;
@@ -262,7 +310,7 @@ public class BasePlayerView extends FrameLayout implements View.OnClickListener 
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    hideAll();
+//                    hideAll();
                     // 延迟0.5秒隐藏视频封面隐藏
                     cover.setVisibility(View.GONE);
                 }

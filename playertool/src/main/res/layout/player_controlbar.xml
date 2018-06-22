@@ -1,30 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/player_bottom_bar"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="38dp"
     android:background="#50000000"
     android:gravity="center_vertical"
-    android:minHeight="40dp"
-    android:padding="4dp"
+    android:layout_gravity="center_vertical"
     android:orientation="horizontal">
 
     <!--左下角的播放暂停按钮-->
     <ImageView
         android:id="@+id/player_bottom_bar_video_play"
-        android:layout_weight="0.25"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:contentDescription="@string/app_name"
-        android:padding="8dp"
+        android:layout_centerVertical="true"
+        android:paddingLeft="7dp"
+        android:paddingRight="7dp"
+        android:paddingTop="4dp"
+        android:paddingBottom="4dp"
         android:src="@drawable/player_left_bottom_play" />
 
     <TextView
         android:id="@+id/player_bottom_bar_currentTime"
-        android:layout_weight="0.2"
-        android:layout_width="0dp"
+        android:layout_toRightOf="@id/player_bottom_bar_video_play"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
+        android:layout_centerVertical="true"
         android:gravity="center"
         android:text="00:00"
         android:textColor="@android:color/white"
@@ -33,17 +36,22 @@
 
     <SeekBar
         android:id="@+id/player_bottom_bar_seekBar"
+        android:layout_toRightOf="@id/player_bottom_bar_currentTime"
+        android:layout_toLeftOf="@id/player_bottom_bar_endTime"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
         style="@style/SeekBarAppTheme"
-        android:layout_weight="1.2"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
     <TextView
         android:id="@+id/player_bottom_bar_endTime"
-        android:layout_weight="0.2"
-        android:layout_width="0dp"
+        android:layout_toLeftOf="@id/player_bottom_bar_stream"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
+        android:layout_centerVertical="true"
         android:gravity="center"
         android:text="00:00"
         android:textColor="@android:color/white"
@@ -52,12 +60,11 @@
 
     <TextView
         android:id="@+id/player_bottom_bar_stream"
-        android:layout_weight="0.15"
-        android:layout_width="0dp"
+        android:layout_toLeftOf="@id/player_bottom_bar_zoom"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
         android:gravity="center"
-        android:clickable="true"
-        android:focusable="true"
         android:visibility="gone"
         android:padding="8dp"
         android:text="标清"
@@ -66,11 +73,15 @@
 
     <ImageView
         android:id="@+id/player_bottom_bar_zoom"
-        android:layout_weight="0.2"
-        android:layout_width="0dp"
+        android:layout_alignParentRight="true"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:contentDescription="@string/app_name"
-        android:padding="8dp"
+        android:layout_centerVertical="true"
+        android:paddingLeft="8dp"
+        android:paddingRight="8dp"
+        android:paddingTop="4dp"
+        android:paddingBottom="4dp"
         android:src="@drawable/player_fullscreen_zoom" />
 
-</LinearLayout>
+</RelativeLayout>

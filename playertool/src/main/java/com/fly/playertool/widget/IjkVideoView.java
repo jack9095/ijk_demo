@@ -206,6 +206,19 @@ public class IjkVideoView extends FrameLayout implements MediaController.MediaPl
         mRenderView.setVideoRotation(mVideoRotationDegree);
     }
 
+    /**
+     * 设置旋转角度
+     */
+    public void setPlayerRotation(int rotation) {
+        mVideoRotationDegree = rotation;
+        if (mRenderView != null) {
+            mRenderView.setVideoRotation(mVideoRotationDegree);
+        }
+    }
+
+    /**
+     * 旋转渲染器
+     */
     public void setRender(int render) {
         switch (render) {
             case RENDER_NONE:
@@ -716,6 +729,7 @@ public class IjkVideoView extends FrameLayout implements MediaController.MediaPl
 
     @Override
     public boolean onTouchEvent(MotionEvent ev) {
+        LogUtil.e("onTouchEvent");
         if (isInPlaybackState() && mMediaController != null) {
             toggleMediaControlsVisiblity();  //改变媒体控制器显隐
         }
