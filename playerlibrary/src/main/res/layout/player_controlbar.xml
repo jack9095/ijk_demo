@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/player_bottom_bar"
+    android:layout_width="match_parent"
+    android:layout_height="38dp"
+    android:background="#50000000"
+    android:gravity="center_vertical"
+    android:layout_gravity="center_vertical"
+    android:orientation="horizontal">
+
+    <!--左下角的播放暂停按钮-->
+    <ImageView
+        android:id="@+id/player_bottom_bar_video_play"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/app_name"
+        android:layout_centerVertical="true"
+        android:paddingLeft="7dp"
+        android:paddingRight="7dp"
+        android:paddingTop="4dp"
+        android:paddingBottom="4dp"
+        android:src="@drawable/player_left_bottom_play" />
+
+    <TextView
+        android:id="@+id/player_bottom_bar_currentTime"
+        android:layout_toRightOf="@id/player_bottom_bar_video_play"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_centerVertical="true"
+        android:gravity="center"
+        android:text="00:00"
+        android:textColor="@android:color/white"
+        android:textSize="12sp"
+        android:visibility="visible" />
+
+    <SeekBar
+        android:id="@+id/player_bottom_bar_seekBar"
+        android:layout_toRightOf="@id/player_bottom_bar_currentTime"
+        android:layout_toLeftOf="@id/player_bottom_bar_endTime"
+        android:layout_centerVertical="true"
+        style="@style/SeekBarAppTheme"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/player_bottom_bar_endTime"
+        android:layout_toLeftOf="@id/player_bottom_bar_stream"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_centerVertical="true"
+        android:gravity="center"
+        android:text="00:00"
+        android:textColor="@android:color/white"
+        android:textSize="12sp"
+        android:visibility="visible" />
+
+    <TextView
+        android:id="@+id/player_bottom_bar_stream"
+        android:layout_toLeftOf="@id/player_bottom_bar_zoom"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:gravity="center"
+        android:visibility="gone"
+        android:padding="8dp"
+        android:text="标清"
+        android:textColor="@android:color/white"
+        android:textSize="12sp" />
+
+    <ImageView
+        android:id="@+id/player_bottom_bar_zoom"
+        android:layout_alignParentRight="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/app_name"
+        android:layout_centerVertical="true"
+        android:paddingLeft="8dp"
+        android:paddingRight="8dp"
+        android:paddingTop="4dp"
+        android:paddingBottom="4dp"
+        android:src="@drawable/player_fullscreen_zoom" />
+
+</RelativeLayout>

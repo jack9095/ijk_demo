@@ -2,7 +2,7 @@ package com.kuanquan.ijk_demo.app;
 
 import android.app.Application;
 
-import com.fly.playertool.utils.LogUtil;
+import com.kuanquan.playerlibrary.utils.LogUtil;
 
 /**
  * Created by Administrator on 2018/6/4.

@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/player_view_player"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/black"
+    android:orientation="vertical">
+
+    <!--播放器-->
+    <com.kuanquan.customplayer.widget.VideoPlayerIJK
+        android:id="@+id/player_view_player_video_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+
+    <!-- 封面显示-->
+    <ImageView
+        android:id="@+id/player_view_player_iv_cover"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="fitXY"
+        android:visibility="gone" />
+
+    <!--加载中-->
+    <LinearLayout
+        android:id="@+id/player_view_player_loading"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <ProgressBar
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:indeterminateBehavior="repeat"
+            android:indeterminateOnly="true" />
+
+        <TextView
+            android:id="@+id/player_view_player_speed"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:gravity="center"
+            android:text="188Kb/s"
+            android:textColor="@android:color/white"
+            android:visibility="gone" />
+    </LinearLayout>
+
+    <!-- 中间触摸提示-->
+    <include
+        layout="@layout/player_touch_gestures"
+        android:layout_width="wrap_content"
+        android:visibility="gone"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true" />
+
+    <!-- 顶部栏-->
+    <com.kuanquan.customplayer.view.PlayerTopView
+        android:id="@+id/player_view_player_play_top_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <!-- 底部栏-->
+    <com.kuanquan.customplayer.view.PlayerBottomView
+        android:id="@+id/player_view_player_play_bottom_view"
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <!--分辨率 （高清、标清） 选择  从右边滑出-->
+    <com.kuanquan.customplayer.view.PlayerLineView
+        android:id="@+id/player_view_player_play_line_view"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <!--中间的播放标记-->
+    <ImageView
+        android:id="@+id/player_view_player_center_icon"
+        android:contentDescription="@string/app_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="8dp"
+        android:src="@drawable/player_center_play" />
+
+</RelativeLayout>
