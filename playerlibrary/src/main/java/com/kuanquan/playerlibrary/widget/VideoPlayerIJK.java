@@ -4,12 +4,14 @@ import android.content.Context;
 import android.support.annotation.AttrRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.widget.FrameLayout;
+
 import java.io.IOException;
 
 import tv.danmaku.ijk.media.player.IMediaPlayer;
@@ -69,23 +71,23 @@ public class VideoPlayerIJK extends FrameLayout {
      * @param path the path of the video.
      */
     public void setVideoPath(String path) {
-//        if (TextUtils.equals("", mPath)) {
-//            //如果是第一次播放视频，那就创建一个新的surfaceView
-//            mPath = path;
-//            createSurfaceView();
-//        } else {
-//            //否则就直接load
-//            mPath = path;
-//            load();
-//        }
-        mPath = path;
+        if (TextUtils.equals("", mPath)) {
+            //如果是第一次播放视频，那就创建一个新的surfaceView
+            mPath = path;
+            createSurfaceView();
+        } else {
+            //否则就直接load
+            mPath = path;
+            load();
+        }
+//        mPath = path;
     }
 
     /**
      * 初始化的时候创建一次SurfaceView就好
      * 新建一个surfaceview
      */
-    public void createSurfaceView() {
+    private void createSurfaceView() {
         Log.e("VideoPlayerIJK","新建一个surfaceview");
         //生成一个新的surface view
         surfaceView = new SurfaceView(mContext);

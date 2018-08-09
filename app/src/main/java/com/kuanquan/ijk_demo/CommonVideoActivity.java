@@ -43,8 +43,7 @@ public class CommonVideoActivity extends AppCompatActivity implements ScreenRota
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
         }
 
-        mVideoView.setVideoPath(UrlUtil.url4);
-        mVideoView.initSurfaceView();
+        mVideoView.setPath(UrlUtil.url4);
     }
 
     @Override
@@ -63,8 +62,9 @@ public class CommonVideoActivity extends AppCompatActivity implements ScreenRota
     @Override
     public void goBack() {
         if (ScreenRotateUtil.isLandscape(this)) {
-            mScreenRotateUtil.setBack(true);
-            mScreenRotateUtil.manualSwitchingPortrait();
+            mVideoView.setVideoPath(UrlUtil.url5);
+//            mScreenRotateUtil.setBack(true);
+//            mScreenRotateUtil.manualSwitchingPortrait();
         } else {
             mScreenWakeLockUtil.finish();
             finish();

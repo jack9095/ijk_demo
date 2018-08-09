@@ -10,6 +10,7 @@ import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
 import android.util.AttributeSet;
 import android.view.View;
+
 import com.kuanquan.playerlibrary.R;
 import com.kuanquan.playerlibrary.utils.HandlerWhat;
 import com.kuanquan.playerlibrary.utils.LogUtil;
@@ -19,7 +20,7 @@ import com.kuanquan.playerlibrary.utils.ScreenRotateUtil;
  * Created by fei.wang on 2018/6/20.
  * 播放控件
  */
-public class VideoView extends CommonPlayer{
+public class VideoView extends CommonPlayer {
 
     /**
      * 禁止触摸，默认可以触摸，true为禁止false为可触摸
@@ -128,7 +129,11 @@ public class VideoView extends CommonPlayer{
                 mIjkVideoView.pause();
             }else{
                 startPlayerUI();
-                mIjkVideoView.start();
+                if (1 == type) {  // 播放新的流
+                    setVideoPath(path);
+                }else {
+                    mIjkVideoView.start();
+                }
             }
 
 //        } else if (v.getId() == R.id.player_view_player_netTie_icon) {

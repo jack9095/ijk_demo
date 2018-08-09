@@ -124,6 +124,7 @@ public class CommonPlayer extends FrameLayout implements View.OnClickListener {
         mPlayerBottomView.getImageView().setOnClickListener(this);
         mPlayerBottomView.getZoomView().setOnClickListener(this);
         mPlayerBottomView.getLineView().setOnClickListener(this);
+        centerPlay.setOnClickListener(this);
         mRelativeLayout.setOnClickListener(this);
 
         screenWidthPixels = ScreenUtils.getScreenWidth(getContext());
@@ -189,14 +190,21 @@ public class CommonPlayer extends FrameLayout implements View.OnClickListener {
         mHandler.sendEmptyMessage(HandlerWhat.MESSAGE_SHOW_PROGRESS);
     }
 
-    // 加载源开始播放
+    /**
+     * 加载源开始播放
+     * @param path  播放源
+     */
     public void setVideoPath(String path) {
         mIjkVideoView.setVideoPath(path);
+        this.type = 0;  // 0 原来的（上一次的）播放路径（默认） 这里设置为0 是为了好暂停和播放
     }
 
-    // 初始化的时候创建一次SurfaceView就好
-    public void initSurfaceView() {
-        mIjkVideoView.createSurfaceView();
+    protected String path;  // 播放路径
+    protected int type;  // 0 原来的（上一次的）播放路径（默认） 1 新的播放路径
+    // TODO 设置播放路径  只有一进来页面的时候才会调用
+    public void setPath(String path){
+        this.path = path;
+        this.type = 1;
     }
 
     /**
@@ -234,6 +242,7 @@ public class CommonPlayer extends FrameLayout implements View.OnClickListener {
     protected void hideViewAll() {
         mPlayerTopView.setVisibility(View.GONE);    // 顶部标题栏布局的控制
         mPlayerBottomView.setVisibility(View.GONE); // 底部导航栏布局的控制
+        centerPlay.setVisibility(View.GONE);   // 播放器中间的播放按钮
         hideStatusUI();
     }
 
@@ -252,8 +261,10 @@ public class CommonPlayer extends FrameLayout implements View.OnClickListener {
 
         if (mPlayerBottomView.getVisibility() == View.VISIBLE) {
             mPlayerBottomView.setVisibility(View.GONE);    // 底部标题栏布局的控制
+            centerPlay.setVisibility(View.GONE);   // 播放器中间的播放按钮
         } else {
             mPlayerBottomView.setVisibility(View.VISIBLE);    // 底部标题栏布局的控制
+            centerPlay.setVisibility(View.VISIBLE);   // 播放器中间的播放按钮
         }
     }
 
