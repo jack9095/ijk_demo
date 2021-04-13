@@ -176,7 +176,7 @@ public final class IjkMediaPlayer extends AbstractMediaPlayer {
     private static final IjkLibLoader sLocalLibLoader = new IjkLibLoader() {
         @Override
         public void loadLibrary(String libName) throws UnsatisfiedLinkError, SecurityException {
-            System.loadLibrary(libName);
+//            System.loadLibrary(libName);
         }
     };
 
@@ -199,7 +199,7 @@ public final class IjkMediaPlayer extends AbstractMediaPlayer {
     private static void initNativeOnce() {
         synchronized (IjkMediaPlayer.class) {
             if (!mIsNativeInitialized) {
-                native_init();
+//                native_init();
                 mIsNativeInitialized = true;
             }
         }
@@ -244,7 +244,7 @@ public final class IjkMediaPlayer extends AbstractMediaPlayer {
          * Native setup requires a weak reference to our object. It's easier to
          * create it here than in C++.
          */
-        native_setup(new WeakReference<IjkMediaPlayer>(this));
+//        native_setup(new WeakReference<IjkMediaPlayer>(this));
     }
 
     private native void _setFrameAtTime(String imgCachePath, long startTime, long endTime, int num, int imgDefinition)

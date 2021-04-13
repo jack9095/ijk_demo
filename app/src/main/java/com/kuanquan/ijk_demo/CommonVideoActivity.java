@@ -35,7 +35,7 @@ public class CommonVideoActivity extends AppCompatActivity implements ScreenRota
         mVideoView.setVideoheight(mVideoView, height / 3);
         mScreenRotateUtil = new ScreenRotateUtil(this, this);
         mScreenRotateUtil.enable();
-        mVideoView.setStartIjkMediaPlayer();
+//        mVideoView.setStartIjkMediaPlayer();
         mScreenWakeLockUtil = new ScreenWakeLockUtil(this);
         mScreenWakeLockUtil.onCreate();
         mVideoView.setPlayerListener(this);
@@ -43,7 +43,7 @@ public class CommonVideoActivity extends AppCompatActivity implements ScreenRota
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
         }
 
-        mVideoView.setPath(UrlUtil.url4);
+//        mVideoView.setPath(UrlUtil.url4);
     }
 
     @Override

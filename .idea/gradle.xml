@@ -12,12 +12,8 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
-            <option value="$PROJECT_DIR$/customplayer" />
             <option value="$PROJECT_DIR$/ijkplayer-java" />
-            <option value="$PROJECT_DIR$/ijkplayer_tools" />
             <option value="$PROJECT_DIR$/playerlibrary" />
-            <option value="$PROJECT_DIR$/playertool" />
-            <option value="$PROJECT_DIR$/test" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />
