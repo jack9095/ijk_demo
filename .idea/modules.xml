@@ -2,15 +2,14 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/ijk_demo.iml" filepath="$PROJECT_DIR$/ijk_demo.iml" />
-      <module fileurl="file://$PROJECT_DIR$/ijk_demo.iml" filepath="$PROJECT_DIR$/ijk_demo.iml" />
-      <module fileurl="file://$PROJECT_DIR$/ijkplayer-java/ijkplayer-java.iml" filepath="$PROJECT_DIR$/ijkplayer-java/ijkplayer-java.iml" />
-      <module fileurl="file://$PROJECT_DIR$/ijkplayer-java/ijkplayer-java.iml" filepath="$PROJECT_DIR$/ijkplayer-java/ijkplayer-java.iml" />
-      <module fileurl="file://D:\ijk_demo\ijkplayer_tools\jjdxm-ijkplayer.iml" filepath="D:\ijk_demo\ijkplayer_tools\jjdxm-ijkplayer.iml" />
-      <module fileurl="file://$PROJECT_DIR$/playerlibrary/playerlibrary.iml" filepath="$PROJECT_DIR$/playerlibrary/playerlibrary.iml" />
-      <module fileurl="file://$PROJECT_DIR$/playerlibrary/playerlibrary.iml" filepath="$PROJECT_DIR$/playerlibrary/playerlibrary.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/ijk_demo.iml" filepath="$PROJECT_DIR$/.idea/ijk_demo.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/ijk_demo.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/ijk_demo.app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/customplayer/ijk_demo.customplayer.iml" filepath="$PROJECT_DIR$/.idea/modules/customplayer/ijk_demo.customplayer.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/ijkplayer-java/ijk_demo.ijkplayer-java.iml" filepath="$PROJECT_DIR$/.idea/modules/ijkplayer-java/ijk_demo.ijkplayer-java.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/ijkplayer_tools/ijk_demo.ijkplayer_tools.iml" filepath="$PROJECT_DIR$/.idea/modules/ijkplayer_tools/ijk_demo.ijkplayer_tools.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/playerlibrary/ijk_demo.playerlibrary.iml" filepath="$PROJECT_DIR$/.idea/modules/playerlibrary/ijk_demo.playerlibrary.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/playertool/ijk_demo.playertool.iml" filepath="$PROJECT_DIR$/.idea/modules/playertool/ijk_demo.playertool.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/test/ijk_demo.test.iml" filepath="$PROJECT_DIR$/.idea/modules/test/ijk_demo.test.iml" />
     </modules>
   </component>
 </project>

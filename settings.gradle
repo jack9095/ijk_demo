@@ -1,7 +1,8 @@
 include ':app'
-//include ':customplayer'
 include ':playerlibrary'
 include ':ijkplayer-java'
-//include ':ijkplayer_tools'
-//include ':test'
-//include ':playertool'
+
+include ':customplayer'
+include ':ijkplayer_tools'
+include ':test'
+include ':playertool'
